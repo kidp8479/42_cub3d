@@ -39,7 +39,7 @@ static const char	*get_file_basename(const char *path)
    *
    * @param filename File path to validate
    * @return true if valid, false otherwise
-   * @note Final check uses (== 0) instead of (!= 0) for 42 Norm lines limit
+   * @note Final check uses (== 0) to check for string equality, as is standard with strncmp
    */
 static bool	is_valid_filename(const char *filename)
 {
