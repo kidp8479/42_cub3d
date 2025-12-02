@@ -14,17 +14,18 @@
 /* =========================== */
 /*         DEFINE              */
 /* =========================== */
-# define NULL_FILENAME "filename is NULL, please use a valid file\n"
-# define LEN_FILENAME "filename is too short. Minimum required: x.cub\n"
-# define EXT_FILENAME "filename extension is invalid. Expected: .cub\n"
-# define HID_FILENAME "filename can't be a hidden file\n"
 
+# define ARG_USAGE "Usage: ./cub3D <valid_map.cub>\n"
+# define NULL_FILENAME "filename is NULL, please use a valid file\n"
+# define LENGTH_FILENAME "filename is too short. Minimum required: x.cub\n"
+# define EXTENSION_FILENAME "filename extension is invalid. Expected: .cub\n"
+# define HIDDEN_FILENAME "filename can't be a hidden file\n"
 
 /* =========================== */
 /*        STRUCTURES           */
 /* =========================== */
 
-/* this structure */
+/* map structure - stores parsed .cub file data */
 typedef struct s_map
 {
 	char	**grid;			// 2d array of chars that represents the map layout
@@ -41,7 +42,7 @@ typedef struct s_map
 	int		ceiling_color;	// rgb color for the ceiling, converted to int (0xRRGGBB)
 }	t_map;
 
-/* this struct */
+/* point of this struct */
 typedef struct s_player
 {
 	double	pos_x;
@@ -52,7 +53,7 @@ typedef struct s_player
 	double	plane_y;
 }	t_player;
 
-/* this struct */
+/* point of this struct */
 typedef struct s_game
 {
 	// === MLX ===
@@ -76,8 +77,7 @@ typedef struct s_game
 /* =========================== */
 
 /* parsing/file_validations.c */
-const char	*get_file_basename(const char *path);
-bool		is_valid_filename(const char *filename);
+int			validate_argument(char *filename);
 
 /* utils/print_errors.c */
 void		print_errors(char *p1, char *p2, char *p3);
