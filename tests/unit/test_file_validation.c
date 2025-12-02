@@ -1,61 +1,64 @@
 #include "cub3d.h"
 
-void	tests_basename(void)
+/**
+ * test_valid_arguments - tests files that should pass validation
+ */
+void	test_valid_arguments(void)
 {
-	printf(MAG "\n=== TEST GET_FILE_BASENAME ===\n" RESET);
-	printf("Test 1: %s\n", get_file_basename("/home/user/test.cub"));
-	printf("Test 2: %s\n", get_file_basename("./maps/test.cub"));
-	printf("Test 3: %s\n", get_file_basename("test.cub"));
-	printf("Test 4: %s\n", get_file_basename("maps/.hidden.cub"));
+	printf(GRN "\n=== VALID FILES ===\n" RESET);
+
+	printf("\n[1] maps/valid/basic_map.cub\n");
+	printf("  Result: %s\n", validate_argument("maps/valid/basic_map.cub") == EXIT_SUCCESS ? GRN "PASS" RESET : RED "FAIL" RESET);
+
+	printf("\n[2] maps/valid/ab.cub (edge: 6 chars, just above minimum)\n");
+	printf("  Result: %s\n", validate_argument("maps/alid/ab.cub") == EXIT_SUCCESS ? GRN "PASS" RESET : RED "FAIL" RESET);
 }
 
-/* sorry for the extra /n when the test prints an ERROR, I can't predict if we
-need extra \n or not */
-void tests_filename(void)
+/**
+ * test_invalid_arguments - tests files that should fail validation
+ */
+void	test_invalid_arguments(void)
 {
-	int result;
+	printf(RED "\n=== INVALID FILES ===\n" RESET);
 
-	printf(MAG "\n=== TEST IS_VALID_FILENAME ===\n" RESET);
+	printf("\n[1] NULL pointer\n");
+	printf("  Result: %s\n", validate_argument(NULL) == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
 
-	// Test 1
-	printf("\n[Test 1] test.cub\n");
-	result = is_valid_filename("test.cub");
-	printf("  → Result: %s%d%s\n", result ? GRN : RED, result, RESET);
+	printf("\n[2] Empty string\n");
+	printf("  Result: %s\n", validate_argument("") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
 
-	// Test 2
-	printf("\n[Test 2] ./maps/test.cub\n");
-	result = is_valid_filename("./maps/test.cub");
-	printf("  → Result: %s%d%s\n", result ? GRN : RED, result, RESET);
+	printf("\n[3] maps/invalid/.hidden.cub (hidden file)\n");
+	printf("  Result: %s\n", validate_argument("maps/invalid/.hidden.cub") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
 
-	// Test 3
-	printf("\n[Test 3] .hidden.cub (should fail)\n");
-	result = is_valid_filename(".hidden.cub");
-	printf("  → Result: %s%d%s\n", result ? GRN : RED, result, RESET);
+	printf("\n[4] maps/invalid/a.cu (too short: 4 chars)\n");
+	printf("  Result: %s\n", validate_argument("maps/invalid/a.cu") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
 
-	// Test 4
-	printf("\n[Test 4] a.cub (exactly 5 chars)\n");
-	result = is_valid_filename("a.cub");
-	printf("  → Result: %s%d%s\n", result ? GRN : RED, result, RESET);
+	printf("\n[5] maps/invalid/invalid.ber (wrong extension)\n");
+	printf("  Result: %s\n", validate_argument("maps/invalid/invalid.ber") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
 
-	// Test 5
-	printf("\n[Test 5] ab.cu (too short)\n");
-	result = is_valid_filename("ab.cu");
-	printf("  → Result: %s%d%s\n", result ? GRN : RED, result, RESET);
+	printf("\n[6] maps/invalid/test.CUB (uppercase extension)\n");
+	printf("  Result: %s\n", validate_argument("maps/invalid/test.CUB") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
 
-	// Test 6
-	printf("\n[Test 6] test.ber (wrong extension)\n");
-	result = is_valid_filename("test.ber");
-	printf("  → Result: %s%d%s\n", result ? GRN : RED, result, RESET);
+	printf("\n[7] maps/invalid/testcub (no extension)\n");
+	printf("  Result: %s\n", validate_argument("maps/invalid/testcub") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
 
-	// Test 7
-	printf("\n[Test 7] NULL\n");
-	result = is_valid_filename(NULL);
-	printf("  → Result: %s%d%s\n", result ? GRN : RED, result, RESET);
+	printf("\n[8] maps/invalid/folder.cub (is a directory)\n");
+	printf("  Result: %s\n", validate_argument("maps/invalid/folder.cub") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
+
+	printf("\n[9] maps/nonexistent.cub (file doesn't exist)\n");
+	printf("  Result: %s\n", validate_argument("maps/nonexistent.cub") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET);
+
+	/* printf("\n[10] maps/invalid/noperm.cub (no permissions)\n");
+	printf("  Result: %s\n", validate_argument("maps/invalid/noperm.cub") == EXIT_FAILURE ? GRN "PASS" RESET : RED "FAIL" RESET); */
 }
 
-int main(void)
+int	main(void)
 {
-	tests_basename();
-	tests_filename();
+
+	printf(MAG "FILE VALIDATION TESTS - cub3D\n" RESET);
+
+	test_valid_arguments();
+	test_invalid_arguments();
+
 	return (0);
 }
