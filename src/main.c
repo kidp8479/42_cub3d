@@ -2,14 +2,12 @@
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-
-	printf("Test 1: %s\n", get_file_basename("/home/user/test.cub"));
-	printf("Test 2: %s\n", get_file_basename("./maps/test.cub"));
-	printf("Test 3: %s\n", get_file_basename("test.cub"));
-	printf("Test 4: %s\n", get_file_basename("maps/.hidden.cub"));
-	printf("Test 4: %s\n", get_file_basename(".cub"));
-
-	return (0);
+	if (argc != 2)
+	{
+		print_errors(ARG_USAGE, NULL, NULL);
+		return (EXIT_FAILURE);
+	}
+	if (validate_argument(argv[1]) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
