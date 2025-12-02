@@ -59,7 +59,7 @@ TEST_DEPS = $(TEST_SRCS:.c=.d)
 test: $(LIBFT_A) $(TEST_OBJS)
 	$(CC) $(CFLAGS) $(TEST_OBJS) -o $(TEST_NAME) $(LIBFT_A)
 	./$(TEST_NAME)
-	$(RM) $(TEST_NAME) $(TEST_OBJS) $(TEST_DEPS) 
+	$(RM) $(TEST_NAME) $(TEST_OBJS) $(TEST_DEPS)
 
 # === cleaning ===
 clean:
