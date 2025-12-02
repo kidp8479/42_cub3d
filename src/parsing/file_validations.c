@@ -1,22 +1,25 @@
 #include "cub3d.h"
 
-  /**
+/**
    * @brief Extracts filename from full file path
    *
    * Handles all path formats: relative, absolute, nested directories.
-   * If no directory separator is found, returns the original path.
+   * If no directory separator '/' is found, returns the original path.
    *
    * @param path Complete file path
    * @return Pointer to the filename
    *
-   * @note Does not allocate memory - returns pointer within original string
+   * @note Does not allocate memory - returns pointer within original string or
+   * the original string directly if there is no '/'
    * @warning Returns NULL if path is NULL
    */
-const char	*get_file_basename(const char *path)
+static const char	*get_file_basename(const char *path)
 {
 	size_t		i;
 	const char	*basename;
 
+	if (!path)
+		return (NULL);
 	i = 0;
 	basename = path;
 	while (path[i])
@@ -28,27 +31,17 @@ const char	*get_file_basename(const char *path)
 	return (basename);
 }
 
-  /**
-   * @brief Validates .cub file extension with comprehensive security checks
+/**
+   * @brief Validates .cub extension, rejects hidden files and short names
    *
-   * Performs a multi-step validation pipeline to ensure the provided filename
-   * has a valid .cub extension and meets security requirements.
+   * Checks: NULL protection, basename extraction, no hidden files,
+   * length >= 5, extension must be ".cub"
    *
-   * Validation Pipeline:
-   * - NULL pointer protection, prevents segfault on invalid input
-   * - Basename extraction, handles relative/absolute paths (./maps/, /path/to/)
-   * - Hidden file detection, rejects files starting with '.' (.hidden.cub)
-   * - Minimum length validation, rejects basenames shorter than 5 characters
-   * - Extension validation, ensures filename ends with exactly ".cub"
-   *
-   * @param filename File path to validate (supports all path formats)
-   * @return true if filename is valid .cub file, false otherwise
-   *
-   * @note Final validation checks for success (== 0) instead of failure (!= 0)
-   * to comply with 42 norm's 25-line function limit.
-   * Error messages are displayed via print_errors() for each failure case.
+   * @param filename File path to validate
+   * @return true if valid, false otherwise
+   * @note Final check uses (== 0) instead of (!= 0) for 42 Norm lines limit
    */
-bool	is_valid_filename(const char *filename)
+static bool	is_valid_filename(const char *filename)
 {
 	size_t		basename_len;
 	const char	*basename;
@@ -62,16 +55,57 @@ bool	is_valid_filename(const char *filename)
 	basename_len = ft_strlen(basename);
 	if (basename[0] == '.')
 	{
-		print_errors(HID_FILENAME, NULL, NULL);
+		print_errors(HIDDEN_FILENAME, NULL, NULL);
 		return (false);
 	}
 	if (basename_len < 5)
 	{
-		print_errors(LEN_FILENAME, NULL, NULL);
+		print_errors(LENGTH_FILENAME, NULL, NULL);
 		return (false);
 	}
 	if (ft_strncmp(&basename[basename_len - 4], ".cub", 4) == 0)
 		return (true);
-	print_errors(EXT_FILENAME, NULL, NULL);
+	print_errors(EXTENSION_FILENAME, NULL, NULL);
 	return (false);
+}
+
+/**
+   * @brief Checks if file exists, is readable, and is not a directory
+   *
+   * Opens the file and attempts to read 1 byte to verify it's a regular file.
+   * Directories will fail the read test with errno EISDIR.
+   *
+   * @param filename Path to the file to check
+   * @return true if file is accessible and readable, false otherwise
+   * @note File descriptor is closed immediately after the check
+   */
+static bool	check_file_access(const char *filename)
+{
+	int		fd;
+	ssize_t	bytes_read;
+	char	buffer[1];
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		perror(RED "Error\nopen" RESET);
+		return (false);
+	}
+	bytes_read = read(fd, buffer, 1);
+	close(fd);
+	if (bytes_read < 0)
+	{
+		perror(RED "Error\nread" RESET);
+		return (false);
+	}
+	return (true);
+}
+
+int	validate_argument(char *filename)
+{
+	if (is_valid_filename(filename) == false)
+		return (EXIT_FAILURE);
+	if (check_file_access(filename) == false)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
