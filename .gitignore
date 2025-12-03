@@ -10,13 +10,15 @@ tests/bin/
 # Ignore object files
 *.o
 *.a
+*.d
 *.out
 *.so
 *.exe
 
 # Ignore compiled executables
 a.out
-minishell
+cub3D
+unit_tests
 
 # Ignore Doxygen config file
 Doxyfile
@@ -27,3 +29,11 @@ Doxyfile
 
 # .supp file for valgrind
 *.supp
+
+# nvim json configs
+.json
+compile_commands.json
+
+# nvim cache
+.cache/
+

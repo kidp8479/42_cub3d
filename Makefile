@@ -9,7 +9,7 @@
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g -MMD -MP
-SYSTEM_FLAGS = -lnext -lX11 -lm
+SYSTEM_FLAGS = -lXext -lX11 -lm
 RM = rm -f
 
 # === directories ===
@@ -24,7 +24,9 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 INC_DIR = -Iincludes -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
 
 # === sources ===
-SRCS =	main.c \
+SRCS =	src/main.c \
+		src/parsing/file_validations.c \
+		src/utils/print_errors.c \
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)
@@ -41,8 +43,23 @@ $(NAME) : $(MLX_A) $(LIBFT_A) $(OBJS)
 $(MLX_A):
 	$(MAKE) -C $(MLX_DIR)
 
-$(LIBFT_A): 
+$(LIBFT_A):
 	$(MAKE) -C $(LIBFT_DIR)
+
+# === testing === (quick set up, this probably can be more efficient later)
+TEST_NAME = unit_tests
+
+TEST_SRCS =	tests/unit/test_file_validation.c \
+			src/parsing/file_validations.c \
+			src/utils/print_errors.c \
+
+TEST_OBJS = $(TEST_SRCS:.c=.o)
+TEST_DEPS = $(TEST_SRCS:.c=.d)
+
+test: $(LIBFT_A) $(TEST_OBJS)
+	$(CC) $(CFLAGS) $(TEST_OBJS) -o $(TEST_NAME) $(LIBFT_A)
+	./$(TEST_NAME)
+	$(RM) $(TEST_NAME) $(TEST_OBJS) $(TEST_DEPS)
 
 # === cleaning ===
 clean:
@@ -50,9 +67,8 @@ clean:
 	$(MAKE) -C $(MLX_DIR) clean
 	$(MAKE) -C $(LIBFT_DIR) clean
 
-fclean:
+fclean: clean
 	$(RM) $(NAME)
-	$(MAKE) -C $(MLX_DIR) fclean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
@@ -60,4 +76,4 @@ re: fclean all
 # === dependencies ===
 -include $(DEPS)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test
