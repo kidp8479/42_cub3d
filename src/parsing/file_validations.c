@@ -63,7 +63,7 @@ static bool	is_valid_filename(const char *filename)
 		print_errors(LENGTH_FILENAME, NULL, NULL);
 		return (false);
 	}
-	if (ft_strncmp(&basename[basename_len - 4], ".cub", 4) == 0)
+	if (ft_strcmp(&basename[basename_len - 4], ".cub") == 0)
 		return (true);
 	print_errors(EXTENSION_FILENAME, NULL, NULL);
 	return (false);
@@ -88,14 +88,14 @@ static bool	check_file_access(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		perror(RED "Error\nopen" RESET);
+		perror("Error\nopen");
 		return (false);
 	}
 	bytes_read = read(fd, buffer, 1);
 	close(fd);
 	if (bytes_read < 0)
 	{
-		perror(RED "Error\nread" RESET);
+		perror("Error\nread");
 		return (false);
 	}
 	return (true);
