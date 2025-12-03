@@ -85,3 +85,11 @@ void	free_map(t_map *map)
 	map->width = 0;
 	map->height = 0;
 }
+
+void	free_partial_grid(t_map *map, int filled_rows)
+{
+	while(--filled_rows >= 0)
+		free(map->grid[filled_rows]);
+	free(map->grid);
+	map->grid = NULL;
+}

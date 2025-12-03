@@ -27,7 +27,7 @@ static int	get_map_dimensions(const char *path, t_map *map)
 
 	fd = open_cub_file(path);
 	if (fd < 0)
-		return (1);
+		return (EXIT_FAILURE);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -40,7 +40,7 @@ static int	get_map_dimensions(const char *path, t_map *map)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -83,10 +83,10 @@ static int	load_map_grid(const char *path, t_map *map)
 
 	fd = open_cub_file(path);
 	if (fd < 0)
-		return (1);
+		return (EXIT_FAILURE);
 	map->grid = malloc(sizeof (char *) * map->height);
 	if (!map->grid)
-		return (close(fd), 1);
+		return (close(fd), EXIT_FAILURE);
 	y = 0;
 	line = get_next_line(fd);
 	while (line)
@@ -95,16 +95,13 @@ static int	load_map_grid(const char *path, t_map *map)
 		free(line);
 		if (!map->grid[y])
 		{
-			while (--y >= 0)
-				free(map->grid[y]);
-			free(map->grid);
-			return (close(fd), 1);
+			free_partial_grid(map, y);
+			return (close(fd), EXIT_FAILURE);
 		}
 		y++;
 		line = get_next_line(fd);
 	}
-	close (fd);
-	return (0);
+	return (close(fd), EXIT_SUCCESS);
 }
 
 /**
@@ -124,13 +121,13 @@ int	parse_map(const char *path, t_map *map)
 {
 	if (get_map_dimensions(path, map))
 	{
-		print_errors("Failed to get map dimensions", NULL, NULL);
-		return (1);
+		print_errors(MAP_DIMENSIONS, NULL, NULL);
+		return (EXIT_FAILURE);
 	}
 	if (load_map_grid(path, map))
 	{
-		print_errors("Failed to load map grid", NULL, NULL);
-		return (1);
+		print_errors(LOAD_MAP, NULL, NULL);
+		return (EXIT_FAILURE);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
