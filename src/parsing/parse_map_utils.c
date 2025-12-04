@@ -100,7 +100,7 @@ void	free_map(t_map *map)
  */
 void	free_partial_grid(t_map *map, int filled_rows)
 {
-	while(--filled_rows >= 0)
+	while (--filled_rows >= 0)
 		free(map->grid[filled_rows]);
 	free(map->grid);
 	map->grid = NULL;
