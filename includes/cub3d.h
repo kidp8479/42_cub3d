@@ -20,6 +20,8 @@
 # define LENGTH_FILENAME "filename is too short. Minimum required: x.cub"
 # define EXTENSION_FILENAME "filename extension is invalid. Expected: .cub"
 # define HIDDEN_FILENAME "filename can't be a hidden file"
+# define MAP_DIMENSIONS "Invalid map dimensions"
+# define LOAD_MAP "Failed to load map grid"
 
 /* =========================== */
 /*        STRUCTURES           */
@@ -73,11 +75,27 @@ typedef struct s_game
 }	t_game;
 
 /* =========================== */
+/*           INIT              */
+/* =========================== */
+
+/* init/init_data.c */
+void		init_data(t_game *game);
+
+/* =========================== */
 /*         PARSING             */
 /* =========================== */
 
 /* parsing/file_validations.c */
 int			validate_argument(char *filename);
+
+/*parse_map.c */
+int			parse_map(const char *path, t_map *map);
+
+/*parse_map_utils.c */
+int			open_cub_file(const char *path);
+void		print_map_grid(t_map *map);
+void		free_map(t_map *map);
+void		free_partial_grid(t_map *map, int filled_rows);
 
 /* utils/print_errors.c */
 void		print_errors(char *p1, char *p2, char *p3);
