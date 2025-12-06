@@ -15,13 +15,24 @@
 /*         DEFINE              */
 /* =========================== */
 
+/* game elements */
+# define WINDOWS_X 800
+# define WINDOWS_Y 600
+# define WINDOWS_MSG "Wecolme to cub3D"
+
+/* errors messages */
 # define ARG_USAGE "Usage: ./cub3D <valid_map.cub>"
-# define NULL_FILENAME "filename is NULL, please use a valid file"
-# define LENGTH_FILENAME "filename is too short. Minimum required: x.cub"
-# define EXTENSION_FILENAME "filename extension is invalid. Expected: .cub"
-# define HIDDEN_FILENAME "filename can't be a hidden file"
+# define NULL_FILENAME "Filename is NULL, please use a valid file"
+# define LENGTH_FILENAME "Filename is too short. Minimum required: x.cub"
+# define EXTENSION_FILENAME "Filename extension is invalid. Expected: .cub"
+# define HIDDEN_FILENAME "Filename can't be a hidden file"
 # define MAP_DIMENSIONS "Invalid map dimensions"
 # define LOAD_MAP "Failed to load map grid"
+# define NULL_TGAME "Invalid t_game structure pointer"
+# define MLX_INIT "Initialization of the MLX connection failed"
+# define WIN_INIT "Initialization of the MLX windows failed"
+# define IMG_INIT "Initialization of the MLX image buffer failed"
+# define IMG_DATA "Retrieving IMG data failed"
 
 /* =========================== */
 /*        STRUCTURES           */
@@ -78,26 +89,38 @@ typedef struct s_game
 /*           INIT              */
 /* =========================== */
 
-/* init/init_data.c */
-void		init_data(t_game *game);
+/* init_data.c */
+void	init_data(t_game *game);
+
+/* init_mlx */
+int		init_game_data(t_game *game);
 
 /* =========================== */
 /*         PARSING             */
 /* =========================== */
 
-/* parsing/file_validations.c */
-int			validate_argument(char *filename);
+/* file_validations.c */
+int		validate_argument(char *filename);
 
 /*parse_map.c */
-int			parse_map(const char *path, t_map *map);
+int		parse_map(const char *path, t_map *map);
 
 /*parse_map_utils.c */
-int			open_cub_file(const char *path);
-void		print_map_grid(t_map *map);
-void		free_map(t_map *map);
-void		free_partial_grid(t_map *map, int filled_rows);
+int		open_cub_file(const char *path);
+void	print_map_grid(t_map *map);
+void	free_map(t_map *map);
+void	free_partial_grid(t_map *map, int filled_rows);
 
-/* utils/print_errors.c */
-void		print_errors(char *p1, char *p2, char *p3);
+/* =========================== */
+/*           RENDERS           */
+/* =========================== */
+void	draw_pixel_in_buffer(t_game *game, int x, int y, int color);
+
+/* =========================== */
+/*           UTILS             */
+/* =========================== */
+
+/* print_errors.c */
+void	print_errors(char *p1, char *p2, char *p3);
 
 #endif
