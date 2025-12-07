@@ -25,9 +25,16 @@ static bool	is_player(char c)
 /**
  * @brief Returns a lookup table for player orientations.
  *
- * Provides a static array of t_orientation structs that map the player
- * orientation character ('N', 'S', 'E', 'W') to the corresponding
- * direction and camera plane vectors.
+ * This table associates the player’s starting orientation character
+ * ('N', 'S', 'E', 'W') with the corresponding direction vector and
+ * camera plane vector used by the raycasting engine.
+ *
+ * The direction vectors represent the unit vector pointing toward
+ * where the player initially faces. The camera plane vectors are
+ * perpendicular to the direction vectors and determine the field of
+ * view. The chosen magnitude (±0.66) corresponds to a FOV of ~66°,
+ * which is the value used in the original Wolfenstein 3D formulation
+ * and is standard in basic raycasting engines.
  *
  * @return Pointer to a static array of 4 t_orientation elements.
  */
