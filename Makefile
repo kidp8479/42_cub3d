@@ -13,6 +13,8 @@ SYSTEM_FLAGS = -lXext -lX11 -lm
 RM = rm -f
 
 # === directories ===
+SRC_DIR = src
+OBJ_DIR = obj
 MLX_DIR = minilibx-linux
 LIBFT_DIR = libft
 
@@ -23,8 +25,8 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 # === includes ===
 INC_DIR = -Iincludes -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
 
-# === sources ===
-SRCS =	src/main.c \
+# === source files ===
+SRC =	src/main.c \
 		src/init/init_data.c \
 		src/parsing/file_validations.c \
 		src/parsing/parse_map.c \
@@ -33,16 +35,20 @@ SRCS =	src/main.c \
 		src/parsing/player_setup_utils.c \
 		src/utils/print_errors.c \
 
-OBJS = $(SRCS:.c=.o)
-DEPS = $(OBJS:.o=.d)
+# objec files preserving subdirectory structure
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+DEPS = $(OBJ:.o=.d)
 
 # === build rules ===
 all: $(NAME)
 
-$(NAME) : $(MLX_A) $(LIBFT_A) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(MLX_A) $(SYSTEM_FLAGS) $(LIBFT_A)
+# build cub3d executable
+$(NAME) : $(MLX_A) $(LIBFT_A) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(MLX_A) $(SYSTEM_FLAGS) $(LIBFT_A)
 
-%.o: %.c
+# rule for object compilation into obj/
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(MLX_A):
@@ -51,29 +57,10 @@ $(MLX_A):
 $(LIBFT_A):
 	$(MAKE) -C $(LIBFT_DIR)
 
-# === testing === (quick set up, this probably can be more efficient later)
-TEST_NAME = unit_tests
-
-TEST_SRCS =	tests/unit/test_file_validation.c \
-			src/init/init_data.c \
-			src/parsing/file_validations.c \
-			src/parsing/parse_map.c \
-			src/parsing/parse_map_utils.c \
-			src/parsing/player_setup.c \
-			src/utils/print_errors.c \
-			tests/unit/test_player_setup.c \
-
-TEST_OBJS = $(TEST_SRCS:.c=.o)
-TEST_DEPS = $(TEST_SRCS:.c=.d)
-
-test: $(LIBFT_A) $(TEST_OBJS)
-	$(CC) $(CFLAGS) $(TEST_OBJS) -o $(TEST_NAME) $(LIBFT_A)
-	./$(TEST_NAME)
-	$(RM) $(TEST_NAME) $(TEST_OBJS) $(TEST_DEPS)
-
 # === cleaning ===
 clean:
-	$(RM) $(OBJS) $(DEPS)
+	$(RM) $(OBJ) $(DEPS)
+	$(RM) -r $(OBJ_DIR)
 	$(MAKE) -C $(MLX_DIR) clean
 	$(MAKE) -C $(LIBFT_DIR) clean
 
