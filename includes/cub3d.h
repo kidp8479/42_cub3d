@@ -15,6 +15,7 @@
 /*         DEFINE              */
 /* =========================== */
 
+// error messages
 # define ARG_USAGE "Usage: ./cub3D <valid_map.cub>"
 # define NULL_FILENAME "filename is NULL, please use a valid file"
 # define LENGTH_FILENAME "filename is too short. Minimum required: x.cub"
@@ -22,6 +23,10 @@
 # define HIDDEN_FILENAME "filename can't be a hidden file"
 # define MAP_DIMENSIONS "Invalid map dimensions"
 # define LOAD_MAP "Failed to load map grid"
+
+// map constants
+# define PLAYER "NSEW"
+# define TILE_CENTER_OFFSET 0.5
 
 /* =========================== */
 /*        STRUCTURES           */
@@ -44,7 +49,7 @@ typedef struct s_map
 	int		ceiling_color;	// rgb color for the ceiling, converted to int (0xRRGGBB)
 }	t_map;
 
-/* point of this struct */
+/* Represents the player’s state in the game */
 typedef struct s_player
 {
 	double	pos_x;
@@ -55,7 +60,7 @@ typedef struct s_player
 	double	plane_y;
 }	t_player;
 
-/* point of this struct */
+/* Encapsulates the entire game state and resources */
 typedef struct s_game
 {
 	// === MLX ===
@@ -73,6 +78,16 @@ typedef struct s_game
 	t_player	player;		// player data (position, direction, camera plane)
 	t_map		map;			// map data (grid, size, textures paths, colors)
 }	t_game;
+
+/* player orientation struct for the look up table */
+typedef struct s_orientation
+{
+	char	c;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}	t_orientation;
 
 /* =========================== */
 /*           INIT              */
@@ -96,6 +111,12 @@ int			open_cub_file(const char *path);
 void		print_map_grid(t_map *map);
 void		free_map(t_map *map);
 void		free_partial_grid(t_map *map, int filled_rows);
+
+/* player_setup.c */
+int			init_player(t_game *game);
+
+/* player_setup_utils.c */
+void		print_player_info(t_player *player);
 
 /* utils/print_errors.c */
 void		print_errors(char *p1, char *p2, char *p3);
