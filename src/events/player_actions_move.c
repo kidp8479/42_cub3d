@@ -43,4 +43,3 @@ void	strafe_right(t_game *game)
 	(void)game;
 	printf("DEBUG: Strafing RIGHT\n");
 }
-

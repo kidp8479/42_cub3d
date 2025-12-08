@@ -18,7 +18,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	print_ascii_art_hello();
 	print_map_grid(&game.map);
-	free_map(&game.map);
 	mlx_key_hook(game.win, handle_keypress, &game);
 	mlx_hook(game.win, 17, 0, handle_close, &game);
 	mlx_loop(game.mlx);

@@ -11,12 +11,12 @@
 */
 int	handle_keypress(int keycode, void *param)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = (t_game *)param;
 	if (keycode == XK_Escape)
 		cleanup_exit(game);
-	if (keycode == XK_w || keycode == XK_W)
+	else if (keycode == XK_w || keycode == XK_W)
 		move_forward(game);
 	else if (keycode == XK_s || keycode == XK_S)
 		move_backward(game);
@@ -44,5 +44,4 @@ int	handle_close(void *param)
 	game = (t_game *)param;
 	cleanup_exit(game);
 	return (EXIT_SUCCESS);
-
 }
