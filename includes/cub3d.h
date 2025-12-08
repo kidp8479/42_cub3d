@@ -107,6 +107,8 @@ typedef struct s_orientation
 void	cleanup_exit(t_game *game);
 
 /* events handlers.c */
+int		handle_keypress(int keycode, void *param);
+int		handle_close(void *param);
 
 /* player_actions_rotate.c */
 void	rotate_left(t_game *game);
