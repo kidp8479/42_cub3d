@@ -101,6 +101,15 @@ static bool	check_file_access(const char *filename)
 	return (true);
 }
 
+/**
+ * @brief Validates .cub file argument for program execution
+ *
+ * Performs complete validation: filename format, extension, accessibility.
+ * Combines checks from is_valid_filename and check_file_access.
+ *
+ * @param filename Path to .cub file to validate
+ * @return EXIT_SUCCESS if valid, EXIT_FAILURE otherwise
+ */
 int	validate_argument(char *filename)
 {
 	if (is_valid_filename(filename) == false)
