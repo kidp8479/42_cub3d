@@ -16,6 +16,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (init_game_data(&game) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
+	print_ascii_art_hello();
 	print_map_grid(&game.map);
 	free_map(&game.map);
 	return (EXIT_SUCCESS);
