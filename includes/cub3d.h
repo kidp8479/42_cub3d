@@ -100,6 +100,25 @@ typedef struct s_orientation
 }	t_orientation;
 
 /* =========================== */
+/*           EVENT             */
+/* =========================== */
+
+/* cleanup_exit.c */
+void	cleanup_exit(t_game *game);
+
+/* events handlers.c */
+
+/* player_actions_rotate.c */
+void	rotate_left(t_game *game);
+void	rotate_right(t_game *game);
+
+/* player_actions_move.c */
+void	move_forward(t_game *game);
+void	move_backward(t_game *game);
+void	strafe_left(t_game *game);
+void	strafe_right(t_game *game);
+
+/* =========================== */
 /*           INIT              */
 /* =========================== */
 
@@ -141,6 +160,9 @@ void	draw_pixel_in_buffer(t_game *game, int x, int y, int color);
 /* =========================== */
 /*           UTILS             */
 /* =========================== */
+
+/* ascii art */
+void	print_ascii_art_hello(void);
 
 /* utils/print_errors.c */
 void	print_errors(char *p1, char *p2, char *p3);
