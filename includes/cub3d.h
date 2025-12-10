@@ -37,7 +37,7 @@
 /* game elements */
 # define WINDOWS_X 800
 # define WINDOWS_Y 600
-# define WINDOWS_MSG "Welcome to cub3D"
+# define WINDOWS_MSG "Welcome to CUB3D"
 
 /* =========================== */
 /*        STRUCTURES           */
@@ -112,76 +112,85 @@ typedef struct s_orientation
 	double	plane_y;
 }	t_orientation;
 
+/* key binding struct for mapping keys to actions */
+typedef struct s_key_binding
+{
+	int		keycode;
+	void	(*action)(t_game *);
+	bool	*flag_ptr;
+}	t_key_binding;
+
 /* =========================== */
 /*           EVENT             */
 /* =========================== */
 
 /* cleanup_exit.c */
-void	cleanup_exit(t_game *game);
+void			cleanup_exit(t_game *game);
 
 /* events handlers.c */
-int		handle_keypress(int keycode, void *param);
-int		handle_keyrelease(int keycode, void *param);
-int		handle_close(void *param);
-int		game_loop(void *param);
+int				handle_keypress(int keycode, void *param);
+int				handle_keyrelease(int keycode, void *param);
+int				handle_close(void *param);
+int				game_loop(void *param);
+t_key_binding	*get_key_bindings(t_game *game);
 
 /* player_actions_rotate.c */
-void	rotate_left(t_game *game);
-void	rotate_right(t_game *game);
+void			rotate_left(t_game *game);
+void			rotate_right(t_game *game);
 
 /* player_actions_move.c */
-void	move_forward(t_game *game);
-void	move_backward(t_game *game);
-void	strafe_left(t_game *game);
-void	strafe_right(t_game *game);
+void			move_forward(t_game *game);
+void			move_backward(t_game *game);
+void			strafe_left(t_game *game);
+void			strafe_right(t_game *game);
 
 /* =========================== */
 /*           INIT              */
 /* =========================== */
 
 /* init_data.c */
-void	init_data(t_game *game);
+void			init_data(t_game *game);
 
 /* init_mlx.c */
-int		init_game_data(t_game *game);
+int				init_game_data(t_game *game);
 
 /* =========================== */
 /*         PARSING             */
 /* =========================== */
 
 /* file_validations.c */
-int		validate_argument(char *filename);
+int				validate_argument(char *filename);
 
 /*parse_map.c */
-int		parse_map(const char *path, t_map *map);
+int				parse_map(const char *path, t_map *map);
 
 /*parse_map_utils.c */
-int		open_cub_file(const char *path);
-void	print_map_grid(t_map *map);
-void	free_map(t_map *map);
-void	free_partial_grid(t_map *map, int filled_rows);
+int				open_cub_file(const char *path);
+void			print_map_grid(t_map *map);
+void			free_map(t_map *map);
+void			free_partial_grid(t_map *map, int filled_rows);
 
 /* player_setup_utils.c */
-void	print_player_info(t_player *player);
+void			print_player_info(t_player *player);
 
 /* player_setup.c */
-int		init_player(t_game *game);
+int				init_player(t_game *game);
 
 /* =========================== */
 /*           RENDERS           */
 /* =========================== */
 
 /* draw_pixels.c*/
-void	draw_pixel_in_buffer(t_game *game, int x, int y, int color);
+void			draw_pixel_in_buffer(t_game *game, int x, int y, int color);
 
 /* =========================== */
 /*           UTILS             */
 /* =========================== */
 
 /* ascii art */
-void	print_ascii_art_hello(void);
+void			print_ascii_art_hello(void);
 
 /* utils/print_errors.c */
-void	print_errors(char *p1, char *p2, char *p3);
+void			print_errors(char *p1, char *p2, char *p3);
 
 #endif
