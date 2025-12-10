@@ -97,6 +97,6 @@ int	main(void)
 	printf("================================\n");
 	test_map_invalid_chars();
 	printf("================================\n");
-	printf("ALL PLAYER INIT TESTS PASSED\n");
+	printf("ALL MAP VALIDATION TESTS PASSED\n");
 	return (0);
 }

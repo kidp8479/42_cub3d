@@ -105,6 +105,7 @@ typedef struct s_orientation
 
 /* init_data.c */
 void	init_data(t_game *game);
+int		load_and_validate_map(char *path, t_game *game);
 
 /* init_mlx.c */
 int		init_game_data(t_game *game);

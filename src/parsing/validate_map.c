@@ -53,6 +53,8 @@ static int	check_allowed_chars(t_map *map)
  * Recursively marks all reachable '0' tiles starting from (y, x) in the
  * provided grid. Stops at walls ('1') or already visited tiles ('v').
  * If a space (' ') or out-of-bounds is reached, it returns failure.
+ * 
+ * @note player position floats are truncated to integers for grid indexing
  *
  * @param grid  The temporary map grid to operate on.
  * @param map   Pointer to the map structure.
@@ -63,15 +65,9 @@ static int	check_allowed_chars(t_map *map)
 static int	flood_fill(char **grid, t_map *map, int y, int x)
 {
 	if (y < 0 || y >= map->height || x < 0 || x >= map->width)
-	{
-		print_errors("map not fully enclosed", NULL, NULL);
 		return (EXIT_FAILURE);
-	}
 	if (grid[y][x] == ' ')
-	{
-		print_errors("map not fully enclosed", NULL, NULL);
 		return (EXIT_FAILURE);
-	}
 	if (grid[y][x] == '1' || grid[y][x] == 'v')
 		return (EXIT_SUCCESS);
 	grid[y][x] = 'v';
@@ -137,11 +133,12 @@ int	check_valid_map(t_map *map, t_player *player)
 	tmp = copy_map(map);
 	if (!tmp)
 	{
-		printf("debug: malloc failure");
+		print_errors("debug: malloc failure", NULL, NULL);
 		return (EXIT_FAILURE);
 	}
 	if (flood_fill(tmp, map, player->pos_y, player->pos_x) == EXIT_FAILURE)
 	{
+		print_errors("map not fully enclosed", NULL, NULL);
 		free_map_copy(tmp, map->height);
 		return (EXIT_FAILURE);
 	}
