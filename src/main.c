@@ -18,8 +18,10 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	print_ascii_art_hello();
 	print_map_grid(&game.map);
-	mlx_key_hook(game.win, handle_keypress, &game);
+	mlx_hook(game.win, 2, 1L<<0, handle_keypress, &game);
+	mlx_hook(game.win, 3, 1L<<1, handle_keyrelease, &game);
 	mlx_hook(game.win, 17, 0, handle_close, &game);
+	mlx_loop_hook(game.mlx, game_loop, &game);
 	mlx_loop(game.mlx);
 	return (EXIT_SUCCESS);
 }

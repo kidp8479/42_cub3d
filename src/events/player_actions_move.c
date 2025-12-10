@@ -7,8 +7,12 @@
 */
 void	move_forward(t_game *game)
 {
+	static int	frame_count = 0;
+
 	(void)game;
-	printf("DEBUG: Moving FORWARD\n");
+	frame_count++;
+	if (frame_count % 60 == 0)
+		printf("DEBUG: Moving FORWARD (frame %d)\n", frame_count);
 }
 
 /**
@@ -18,8 +22,12 @@ void	move_forward(t_game *game)
 */
 void	move_backward(t_game *game)
 {
+	static int	frame_count = 0;
+
 	(void)game;
-	printf("DEBUG: Moving BACKWARD\n");
+	frame_count++;
+	if (frame_count % 60 == 0)
+		printf("DEBUG: Moving BACKWARD (frame %d)\n", frame_count);
 }
 
 /**
@@ -29,8 +37,12 @@ void	move_backward(t_game *game)
 */
 void	strafe_left(t_game *game)
 {
+	static int	frame_count = 0;
+
 	(void)game;
-	printf("DEBUG: Strafing LEFT\n");
+	frame_count++;
+	if (frame_count % 60 == 0)
+		printf("DEBUG: Strafing LEFT (frame %d)\n", frame_count);
 }
 
 /**
@@ -40,6 +52,10 @@ void	strafe_left(t_game *game)
 */
 void	strafe_right(t_game *game)
 {
+	static int	frame_count = 0;
+
 	(void)game;
-	printf("DEBUG: Strafing RIGHT\n");
+	frame_count++;
+	if (frame_count % 60 == 0)
+		printf("DEBUG: Strafing RIGHT (frame %d)\n", frame_count);
 }

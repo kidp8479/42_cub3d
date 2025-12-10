@@ -7,8 +7,12 @@
 */
 void	rotate_left(t_game *game)
 {
+	static int	frame_count = 0;
+
 	(void)game;
-	printf("DEBUG: Rotating LEFT\n");
+	frame_count++;
+	if (frame_count % 60 == 0)
+		printf("DEBUG: Rotating LEFT (frame %d)\n", frame_count);
 }
 
 /**
@@ -18,6 +22,10 @@ void	rotate_left(t_game *game)
 */
 void	rotate_right(t_game *game)
 {
+	static int	frame_count = 0;
+
 	(void)game;
-	printf("DEBUG: Rotating RIGHT\n");
+	frame_count++;
+	if (frame_count % 60 == 0)
+		printf("DEBUG: Rotating RIGHT (frame %d)\n", frame_count);
 }

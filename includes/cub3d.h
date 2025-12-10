@@ -10,6 +10,7 @@
 # include <X11/keysym.h>
 # include <math.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 /* =========================== */
 /*         DEFINE              */
@@ -59,7 +60,18 @@ typedef struct s_map
 	int		ceiling_color;	// rgb color for the ceiling, converted to int (0xRRGGBB)
 }	t_map;
 
-/* Represents the player’s state in the game */
+/* Tracks which keys are currently pressed */
+typedef struct s_keys
+{
+	bool	w_pressed;
+	bool	a_pressed;
+	bool	s_pressed;
+	bool	d_pressed;
+	bool	left_arrow_pressed;
+	bool	right_arrow_pressed;
+}	t_keys;
+
+/* Represents the player's state in the game */
 typedef struct s_player
 {
 	double	pos_x;
@@ -87,6 +99,7 @@ typedef struct s_game
 	// === Game state ===
 	t_player	player;		// player data (position, direction, camera plane)
 	t_map		map;			// map data (grid, size, textures paths, colors)
+	t_keys		keys;		// tracks which keys are currently pressed
 }	t_game;
 
 /* player orientation struct for the look up table */
@@ -108,7 +121,9 @@ void	cleanup_exit(t_game *game);
 
 /* events handlers.c */
 int		handle_keypress(int keycode, void *param);
+int		handle_keyrelease(int keycode, void *param);
 int		handle_close(void *param);
+int		game_loop(void *param);
 
 /* player_actions_rotate.c */
 void	rotate_left(t_game *game);
