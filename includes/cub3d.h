@@ -100,6 +100,9 @@ typedef struct s_game
 	t_player	player;		// player data (position, direction, camera plane)
 	t_map		map;			// map data (grid, size, textures paths, colors)
 	t_keys		keys;		// tracks which keys are currently pressed
+		// === Mouse ===
+	int			last_mouse_x;	// last mouse X position for delta calculation
+	int			last_mouse_y;	// last mouse Y position for delta calculation
 }	t_game;
 
 /* player orientation struct for the look up table */
@@ -115,9 +118,9 @@ typedef struct s_orientation
 /* key binding struct for mapping keys to actions */
 typedef struct s_key_binding
 {
-	int		keycode;
-	void	(*action)(t_game *);
-	bool	*flag_ptr;
+	int		keycode; // X11 keycode for this specific key (ex: XK_w, XK_Left)
+	void	(*action)(t_game *); // function pointer to the action that should be executed
+	bool	*flag_ptr;  // Pointer to the boolean flag that represents whether this key is currently pressed (true) or released (false)
 }	t_key_binding;
 
 /* =========================== */
