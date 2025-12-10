@@ -63,10 +63,13 @@ static int	check_allowed_chars(t_map *map)
 static int	flood_fill(char **grid, t_map *map, int y, int x)
 {
 	if (y < 0 || y >= map->height || x < 0 || x >= map->width)
+	{
+		print_errors("map not fully enclosed", NULL, NULL);
 		return (EXIT_FAILURE);
+	}
 	if (grid[y][x] == ' ')
 	{
-		print_errors("map not enclosed", NULL, NULL);
+		print_errors("map not fully enclosed", NULL, NULL);
 		return (EXIT_FAILURE);
 	}
 	if (grid[y][x] == '1' || grid[y][x] == 'v')
@@ -133,7 +136,10 @@ int	check_valid_map(t_map *map, t_player *player)
 		return (EXIT_FAILURE);
 	tmp = copy_map(map);
 	if (!tmp)
+	{
+		printf("debug: malloc failure");
 		return (EXIT_FAILURE);
+	}
 	if (flood_fill(tmp, map, player->pos_y, player->pos_x) == EXIT_FAILURE)
 	{
 		free_map_copy(tmp, map->height);

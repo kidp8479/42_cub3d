@@ -72,5 +72,4 @@ deepclean: fclean
 
 # Build a single test
 # Usage: make run TEST=unit/test_name.c
-run: $(BIN_DIR)/$(basename $(notdir $(TEST)))
-	./$(BIN_DIR)/$(basename $(notdir $(TEST)))
+build: $(BIN_DIR)/$(basename $(notdir $(TEST)))
