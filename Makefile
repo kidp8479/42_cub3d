@@ -3,7 +3,7 @@
 #    ██║     ██║   ██║██████╔╝ █████╔╝██║  ██║
 #    ██║     ██║   ██║██╔══██╗ ╚═══██╗██║  ██║
 #    ╚██████╗╚██████╔╝██████╔╝██████╔╝██████╔╝
-#     ╚═════╝ ╚═════╝ ╚═════╝ ╚ ╚═════╝
+#     ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝
 
 # === general configuration ===
 NAME = cub3D
@@ -27,6 +27,12 @@ INC_DIR = -Iincludes -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
 
 # === source files ===
 SRC =	src/main.c \
+		src/events/cleanup_exit.c \
+		src/events/events_handler.c \
+		src/events/hooks.c \
+		src/events/player_actions_rotate.c \
+		src/events/player_actions_move.c \
+		src/events/mouse_handler.c \
 		src/init/init_data.c \
 		src/init/init_mlx.c \
 		src/parsing/file_validations.c \
@@ -36,6 +42,7 @@ SRC =	src/main.c \
 		src/parsing/player_setup.c \
 		src/parsing/player_setup_utils.c \
 		src/parsing/validate_map.c \
+		src/utils/ascii_art.c \
 		src/utils/print_errors.c \
 
 # object files preserving subdirectory structure
