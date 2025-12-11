@@ -24,7 +24,7 @@ static int	check_allowed_chars(t_map *map)
 			c = map->grid[y][x];
 			if (c != '1' && c != '0' && c != ' ')
 			{
-				print_errors("Invalid map chars", NULL, NULL);
+				print_errors(MAP_CHAR, NULL, NULL);
 				return (EXIT_FAILURE);
 			}
 			x++;
@@ -75,12 +75,12 @@ static int	check_zero_adjacent(t_map *map, int y, int x)
 		nx = x + dir_x[i];
 		if (!in_bounds(map, ny, nx))
 		{
-			print_errors("Invalid map: 0 on boarder", NULL, NULL);
+			print_errors(MAP_ZERO_BORDER, NULL, NULL);
 			return (EXIT_FAILURE);
 		}
 		if (map->grid[ny][nx] != '0' && map->grid[ny][nx] != '1')
 		{
-			print_errors("Invalid map: 0 touches invalid cell", NULL, NULL);
+			print_errors(MAP_ZERO_INVALID, NULL, NULL);
 			return (EXIT_FAILURE);
 		}
 		i++;
@@ -116,7 +116,7 @@ static int	check_space_adjacent(t_map *map, int y, int x)
 		{
 			if (map->grid[ny][nx] == '0')
 			{
-				print_errors("Invalid map: space next to 0", NULL, NULL);
+				print_errors(MAP_SPACE, NULL, NULL);
 				return (EXIT_FAILURE);
 			}
 		}
@@ -140,6 +140,8 @@ int	check_valid_map(t_map *map)
 	int	y;
 	int	x;
 
+	if (map->width > MAX_MAP_W || map->height > MAX_MAP_H)
+		return (print_errors(MAP_TOO_LARGE, NULL, NULL), EXIT_FAILURE);
 	if (check_allowed_chars(map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	y = 0;

@@ -23,6 +23,11 @@
 # define EXTENSION_FILENAME "Filename extension is invalid. Expected: .cub"
 # define HIDDEN_FILENAME "Filename can't be a hidden file"
 # define MAP_DIMENSIONS "Invalid map dimensions"
+# define MAP_TOO_LARGE "Map too large (max 500 x 500)"
+# define MAP_CHAR "Invalid character in map"
+# define MAP_ZERO_BORDER "Map not closed: 0 on border"
+# define MAP_ZERO_INVALID "Map not closed: 0 adjacent to invalid cell"
+# define MAP_SPACE "Map not closed: space adjacent to walkable area"
 # define LOAD_MAP "Failed to load map grid"
 # define NULL_TGAME "Invalid t_game structure pointer"
 # define MLX_INIT "Initialization of the MLX connection failed"
@@ -33,6 +38,8 @@
 /* map constants */
 # define PLAYER "NSEW"
 # define TILE_CENTER_OFFSET 0.5
+# define MAX_MAP_W 500
+# define MAX_MAP_H 500
 
 /* game elements */
 # define WINDOWS_X 800
