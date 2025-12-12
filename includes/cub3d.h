@@ -22,13 +22,16 @@
 # define LENGTH_FILENAME "Filename is too short. Minimum required: x.cub"
 # define EXTENSION_FILENAME "Filename extension is invalid. Expected: .cub"
 # define HIDDEN_FILENAME "Filename can't be a hidden file"
+# define PLAYER_ORIENTATION "Invalid player orientation"
+# define PLAYER_NONE "Player not found"
+# define PLAYER_MULTI "Multiple players detected"
 # define MAP_DIMENSIONS "Invalid map dimensions"
 # define MAP_TOO_LARGE "Map too large (max 500 x 500)"
 # define MAP_CHAR "Invalid character in map"
 # define MAP_ZERO_BORDER "Map not closed: 0 on border"
 # define MAP_ZERO_INVALID "Map not closed: 0 adjacent to invalid cell"
 # define MAP_SPACE "Map not closed: space adjacent to walkable area"
-# define LOAD_MAP "Failed to load map grid"
+# define MAP_LOAD "Failed to load map grid"
 # define NULL_TGAME "Invalid t_game structure pointer"
 # define MLX_INIT "Initialization of the MLX connection failed"
 # define WIN_INIT "Initialization of the MLX windows failed"
@@ -54,27 +57,26 @@
 typedef struct s_map
 {
 	char	**grid;			// 2d array of chars that represents the map layout
-							// ex: '1' = wall, '0' = empty space, 'N' = player, etc.
 	int		width;			// width of the map (max number of columns)
-							// useful for checking map boundaries
 	int		height;			// height of the map (number of lines)
-							// used to loop over the map safely
-	char	*no_path;		// file path for north wall texture (from .cub file)
-	char	*so_path;		// file path for south wall texture
-	char	*ea_path;		// file path for east wall texture
-	char	*we_path;		// file path for west wall texture
-	int		floor_color;	// rgb color for the floor, converted to int (0xRRGGBB)
-	int		ceiling_color;	// rgb color for the ceiling, converted to int (0xRRGGBB)
-	// make sure there is only one of each in the .cub file
-	bool	no_set;
-	bool	so_set;
-	bool	ea_set;
-	bool	we_set;
-	bool	floor_set;
-	bool	ceiling_set;
+	int		floor_color[3];	// rgb color for the floor, converted to int (0xRRGGBB)
+	int		ceiling_color[3];	// rgb color for the ceiling, converted to int (0xRRGGBB)
+	char	*tex_paths[4];
+	bool	id_set[6];
 	// keeps track of where the map lines start
 	int		map_start_line;
 }	t_map;
+
+typedef enum e_header_type
+{
+	ID_NONE = -1,
+	ID_NO = 0,
+	ID_SO = 1,
+	ID_WE = 2,
+	ID_EA = 3,
+	ID_FLOOR = 4,
+	ID_CEILING = 5
+}	t_header_type;
 
 /* Tracks which keys are currently pressed */
 typedef struct s_keys

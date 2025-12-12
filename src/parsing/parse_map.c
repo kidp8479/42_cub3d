@@ -150,7 +150,7 @@ int	parse_map(const char *path, t_map *map)
 	}
 	if (load_map_grid(path, map))
 	{
-		print_errors(LOAD_MAP, NULL, NULL);
+		print_errors(MAP_LOAD, NULL, NULL);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

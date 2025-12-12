@@ -87,7 +87,7 @@ static void	set_player_position(t_game *game, int y, int x)
 		}
 		i++;
 	}
-	print_errors("Invalid player orientation", NULL, NULL);
+	print_errors(PLAYER_ORIENTATION, NULL, NULL);
 }
 
 /**
@@ -114,7 +114,7 @@ static int	set_player(t_game *game, int *player_found, int y, int x)
 	{
 		if (*player_found)
 		{
-			print_errors("Multiple players detected", NULL, NULL);
+			print_errors(PLAYER_MULTI, NULL, NULL);
 			return (EXIT_FAILURE);
 		}
 		*player_found = 1;
@@ -157,7 +157,7 @@ int	init_player(t_game *game)
 	}
 	if (!player_found)
 	{
-		print_errors("Player not found", NULL, NULL);
+		print_errors(PLAYER_NONE, NULL, NULL);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
