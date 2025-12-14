@@ -128,5 +128,9 @@ int	game_loop(void *param)
 			bindings[i].action(game);
 		i++;
 	}
+	// render single ray at screen center
+	render_single_ray(game);
+	// display the rendered frame
+	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	return (EXIT_SUCCESS);
 }
