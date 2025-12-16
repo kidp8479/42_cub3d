@@ -78,7 +78,7 @@ void	print_map_grid(t_map *map)
  *
  * @param map Pointer to the t_map structure to free.
  */
-void	free_map(t_map *map)
+void	free_map_grid(t_map *map)
 {
 	int	i;
 

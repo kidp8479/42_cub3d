@@ -152,11 +152,8 @@ typedef struct s_key_binding
 }	t_key_binding;
 
 /* =========================== */
-/*           EVENT             */
+/*           EVENTS            */
 /* =========================== */
-
-/* cleanup_exit.c */
-void			cleanup_exit(t_game *game);
 
 /* events handlers.c */
 int				handle_keypress(int keycode, void *param);
@@ -218,7 +215,7 @@ int				parse_map(const char *path, t_map *map);
 int				max_int(int a, int b);
 int				open_cub_file(const char *path);
 void			print_map_grid(t_map *map);
-void			free_map(t_map *map);
+void			free_map_grid(t_map *map);
 void			free_partial_grid(t_map *map, int filled_rows);
 
 /* player_setup.c */
@@ -243,6 +240,9 @@ void			draw_pixel_in_buffer(t_game *game, int x, int y, int color);
 
 /* ascii art */
 void			print_ascii_art_hello(void);
+
+/* cleanup_exit.c */
+void			cleanup_exit(t_game *game);
 
 /* utils/print_errors.c */
 void			print_errors(char *p1, char *p2, char *p3);
