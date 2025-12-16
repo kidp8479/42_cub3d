@@ -233,6 +233,9 @@ double			cast_ray(t_game *game, double ray_dir_x, double ray_dir_y);
 /* simple_ray.c */
 void			render_single_ray(t_game *game);
 
+/* raycast.c */
+void			render_frame(t_game *game);
+
 /* =========================== */
 /*           UTILS             */
 /* =========================== */
