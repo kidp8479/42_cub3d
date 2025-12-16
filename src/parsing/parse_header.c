@@ -75,6 +75,6 @@ int	parse_header(const char *path, t_map *map)
 	}
 	// for debug , can delete later to save some lines
 	if (!all_headers_set(map))
-		return (print_errors("Missing headers", NULL, NULL), EXIT_FAILURE);
+		return (print_errors(HEADER_MISSING, NULL, NULL), EXIT_FAILURE);
 	return (close(fd), EXIT_SUCCESS);
 }

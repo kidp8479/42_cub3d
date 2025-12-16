@@ -7,7 +7,7 @@ static bool	validate_texture_file(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("Error\nopen");
+		print_errors(ERR_TEXTURE_INVALID, NULL, NULL);
 		return (false);
 	}
 	close(fd);
@@ -21,7 +21,7 @@ static int	set_texture_path(t_map *map, t_header_type id, const char *path)
 	trimmed_value = ft_strtrim(path, " \t\n");
 	if (!trimmed_value || trimmed_value[0] == '\0')
 	{
-		print_errors("ft_strtrim fail", NULL, NULL);
+		print_errors(ERR_TEXTURE_TRIM_FAIL, NULL, NULL);
 		free(trimmed_value);
 		return (EXIT_FAILURE);
 	}
@@ -30,7 +30,7 @@ static int	set_texture_path(t_map *map, t_header_type id, const char *path)
 		free(trimmed_value);
 		return (EXIT_FAILURE);
 	}
-	map->tex_paths[id] = trimmed_value; //need to free prs later
+	map->tex_paths[id] = trimmed_value;
 	return (EXIT_SUCCESS);
 }
 
@@ -39,7 +39,7 @@ static int	set_rgb_color(t_map *map, t_heaer_type id, const char *value)
 	int	*rgb_values;
 
 	if (id == ID_FLOOR)
-		rgb_values = map->floor_color;//point to first value of array
+		rgb_values = map->floor_color;//points to first value of array
 	else
 		rgb_values = map->ceiling_color;
 	if (parse_rgb(value, rgb_values) == EXIT_FAILURE)
@@ -53,7 +53,7 @@ static int	parse_header_value(t_map *map, const char *value, t_header_type id)
 	int		*rgb_values;
 
 	if (map->id_set[id] == true)
-		return (print_errors("duplicate identifier"), EXIT_FAILURE);
+		return (print_errors(HEADER_DUPLICATE, NULL, NULL), EXIT_FAILURE);
 	if (id >= ID_NO && id <= ID_EA)
 	{
 		if (set_texture_path(map, id, value) == EXIT_FAILURE)

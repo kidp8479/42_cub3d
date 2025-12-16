@@ -16,15 +16,19 @@
 /*         DEFINE              */
 /* =========================== */
 
-/* error messages */
+/* File validation errors */
 # define ARG_USAGE "Usage: ./cub3D <valid_map.cub>"
 # define NULL_FILENAME "Filename is NULL, please use a valid file"
 # define LENGTH_FILENAME "Filename is too short. Minimum required: x.cub"
 # define EXTENSION_FILENAME "Filename extension is invalid. Expected: .cub"
 # define HIDDEN_FILENAME "Filename can't be a hidden file"
+
+/* player parsing errors */
 # define PLAYER_ORIENTATION "Invalid player orientation"
 # define PLAYER_NONE "Player not found"
 # define PLAYER_MULTI "Multiple players detected"
+
+/* map parsing errors */
 # define MAP_DIMENSIONS "Invalid map dimensions"
 # define MAP_TOO_LARGE "Map too large (max 500 x 500)"
 # define MAP_CHAR "Invalid character in map"
@@ -32,6 +36,23 @@
 # define MAP_ZERO_INVALID "Map not closed: 0 adjacent to invalid cell"
 # define MAP_SPACE "Map not closed: space adjacent to walkable area"
 # define MAP_LOAD "Failed to load map grid"
+
+/* header parsing errors */
+# define HEADER_DUPLICATE "Duplicate header identifier"
+# define HEADER_INVALID "Invalid header identifier"
+# define HEADER_MISSING "Missing headers"
+
+/* Texture-related errors */
+# define ERR_TEXTURE_TRIM_FAIL "Texture path trim failed"
+# define ERR_TEXTURE_INVALID "Texture file invalid or cannot be opened"
+# define ERR_DUPLICATE_TEXTURE "Duplicate texture identifier"
+
+/* RGB/color related errors */
+# define RGB_SPLIT_FAIL "RGB: split failed"
+# define RGB_INVALID_VALUE "RGB: invalid value"
+# define RGB_TOO_MANY "RGB: Too many values. Expected: 3"
+
+/* MLX errors */
 # define NULL_TGAME "Invalid t_game structure pointer"
 # define MLX_INIT "Initialization of the MLX connection failed"
 # define WIN_INIT "Initialization of the MLX windows failed"
