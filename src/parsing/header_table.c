@@ -11,16 +11,15 @@ static const t_header_entry	*get_header_table(void)
 	{"C", ID_CEILING, 1},
 	};
 
-	return (header_entry);
+	return (header);
 }
 
-t_header_type	*get_header_entry(const char *line)
+const t_header_entry	*get_header_entry(const char *line)
 {
 	size_t					i;
-	size_t					count;
 	const t_header_entry	*entries;
 
-	entries = get_header_table(&count);
+	entries = get_header_table();
 	i = 0;
 	while (i < HEADER_SIZE)
 	{
