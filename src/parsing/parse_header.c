@@ -34,6 +34,20 @@ static bool	line_is_empty(char *line)
 	return (true);
 }
 
+static bool	all_headers_set(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < HEADER_COUNT)
+	{
+		if (map->id_set[i] == false)
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 int	parse_header(const char *path, t_map *map)
 {
 	int		i;
@@ -43,7 +57,7 @@ int	parse_header(const char *path, t_map *map)
 	fd = open_cub_file(path);
 	if (fd < 0)
 		return (EXIT_FAILURE);
-	line = get_next_line(line);
+	line = get_next_line(fd);
 	i = 0;
 	while (line)
 	{
@@ -59,5 +73,8 @@ int	parse_header(const char *path, t_map *map)
 		}
 		next_line(&line, fd, &i);
 	}
+	// for debug , can delete later to save some lines
+	if (!all_headers_set(map))
+		return (print_errors("Missing headers", NULL, NULL), EXIT_FAILURE);
 	return (close(fd), EXIT_SUCCESS);
 }
