@@ -27,22 +27,26 @@ INC_DIR = -Iincludes -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
 
 # === source files ===
 SRC =	src/main.c \
-		src/events/cleanup_exit.c \
 		src/events/events_handler.c \
 		src/events/hooks.c \
-		src/events/player_actions_rotate.c \
-		src/events/player_actions_move.c \
 		src/events/mouse_handler.c \
+		src/events/player_actions_move.c \
+		src/events/player_actions_rotate.c \
 		src/init/init_data.c \
 		src/init/init_mlx.c \
 		src/parsing/file_validations.c \
+		src/parsing/header_table.c \
+		src/parsing/parse_color.c \
+		src/parsing/parse_header.c \
+		src/parsing/parse_header_line.c \
 		src/parsing/parse_map.c \
 		src/parsing/parse_map_utils.c \
-		src/render/draw_pixels.c \
 		src/parsing/player_setup.c \
 		src/parsing/player_setup_utils.c \
 		src/parsing/validate_map.c \
+		src/render/draw_pixels.c \
 		src/utils/ascii_art.c \
+		src/utils/cleanup_exit.c \
 		src/utils/print_errors.c \
 
 # object files preserving subdirectory structure
