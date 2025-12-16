@@ -25,17 +25,17 @@ int	parse_rgb(const char *value, int rgb_values[RGB_SIZE])
 	{
 		if (!rgb_strs[i] || parse_rgb_component(rgb_strs[i], &rgb_values[i]))
 		{
-			print_errors(RGB_INVALID_VALUE, NULL, NULL);
-			return (free_split(rgb_strs), EXIT_FAILURE);
+			print_errors(RGB_INVALID_FORMAT, NULL, NULL);
+			return (free_strings_array(rgb_strs), EXIT_FAILURE);
 		}
 		i++;
 	}
 	if (rgb_strs[RGB_SIZE] != NULL)
 	{
 		print_errors(RGB_TOO_MANY, NULL, NULL);
-		free_split(rgb_strs);
+		free_strings_array(rgb_strs);
 		return (EXIT_FAILURE);
 	}
-	free_split(rgb_strs);
+	free_strings_array(rgb_strs);
 	return (EXIT_SUCCESS);
 }
