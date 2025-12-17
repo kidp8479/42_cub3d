@@ -43,9 +43,10 @@
 # define HEADER_MISSING "Missing headers"
 
 /* Texture-related errors */
-# define ERR_TEXTURE_TRIM_FAIL "Texture path trim failed"
-# define ERR_TEXTURE_INVALID "Texture file invalid or cannot be opened"
-# define ERR_DUPLICATE_TEXTURE "Duplicate texture identifier"
+# define TEXTURE_TRIM_FAIL "Texture path trim failed"
+# define TEXTURE_INVALID "Texture file invalid or cannot be opened"
+# define TEXTURE_DUPLICATE "Duplicate texture identifier"
+# define TEXTURE_EMPTY "Texture path missing or empty"
 
 /* RGB/color related errors */
 # define RGB_SPLIT_FAIL "RGB: split failed"
@@ -263,6 +264,7 @@ void			draw_pixel_in_buffer(t_game *game, int x, int y, int color);
 void			print_ascii_art_hello(void);
 
 /* cleanup_exit.c */
+void			free_t_map(t_map *map);
 void			cleanup_exit(t_game *game);
 
 /* utils/print_errors.c */
