@@ -5,6 +5,7 @@
  *
  * This function returns a static array that maps X11 keycodes to their
  * corresponding action functions and key state flags.
+ * Initializes the bindings only once on first call for efficiency.
  *
  * @param game Pointer to game structure to access key flags
  * @return Pointer to a static array of key bindings (NULL-terminated)
@@ -12,16 +13,21 @@
 t_key_binding	*get_key_bindings(t_game *game)
 {
 	static t_key_binding	bindings[7];
+	static bool				initialized = false;
 
-	bindings[0] = (t_key_binding){XK_w, move_forward, &game->keys.w_pressed};
-	bindings[1] = (t_key_binding){XK_s, move_backward, &game->keys.s_pressed};
-	bindings[2] = (t_key_binding){XK_a, strafe_left, &game->keys.a_pressed};
-	bindings[3] = (t_key_binding){XK_d, strafe_right, &game->keys.d_pressed};
-	bindings[4] = (t_key_binding){XK_Left, rotate_left,
-		&game->keys.left_arrow_pressed};
-	bindings[5] = (t_key_binding){XK_Right, rotate_right,
-		&game->keys.right_arrow_pressed};
-	bindings[6] = (t_key_binding){0, NULL, NULL};
+	if (!initialized)
+	{
+		bindings[0] = (t_key_binding){XK_w, move_forward, &game->keys.w_pressed};
+		bindings[1] = (t_key_binding){XK_s, move_backward, &game->keys.s_pressed};
+		bindings[2] = (t_key_binding){XK_a, strafe_left, &game->keys.a_pressed};
+		bindings[3] = (t_key_binding){XK_d, strafe_right, &game->keys.d_pressed};
+		bindings[4] = (t_key_binding){XK_Left, rotate_left,
+			&game->keys.left_arrow_pressed};
+		bindings[5] = (t_key_binding){XK_Right, rotate_right,
+			&game->keys.right_arrow_pressed};
+		bindings[6] = (t_key_binding){0, NULL, NULL};
+		initialized = true;
+	}
 	return (bindings);
 }
 
@@ -101,36 +107,5 @@ int	handle_close(void *param)
 
 	game = (t_game *)param;
 	cleanup_exit(game);
-	return (EXIT_SUCCESS);
-}
-
-/**
- * @brief Main game loop - called every frame by MLX (~60 FPS)
- *
- * Checks which keys are pressed and calls their corresponding action
- * functions using the key bindings system.
- *
- * @param param Pointer to game structure (void* from MLX, must cast)
- * @return EXIT_SUCCESS
- */
-int	game_loop(void *param)
-{
-	t_game				*game;
-	t_key_binding		*bindings;
-	int					i;
-
-	game = (t_game *)param;
-	bindings = get_key_bindings(game);
-	i = 0;
-	while (bindings[i].action)
-	{
-		if (*bindings[i].flag_ptr)
-			bindings[i].action(game);
-		i++;
-	}
-	// render single ray at screen center
-	render_single_ray(game);
-	// display the rendered frame
-	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	return (EXIT_SUCCESS);
 }
