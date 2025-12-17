@@ -58,6 +58,8 @@ static void	draw_wall_column(t_game *game, int x, double wall_distance,
 	int	draw_start;
 	int	draw_end;
 
+	if (wall_distance < 0.001)
+		wall_distance = 0.001;
 	line_height = (int)(WINDOWS_Y / wall_distance);
 	draw_start = (WINDOWS_Y - line_height) / 2;
 	draw_end = draw_start + line_height - 1;
