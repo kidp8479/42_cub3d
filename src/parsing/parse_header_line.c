@@ -7,7 +7,7 @@ static bool	validate_texture_file(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		print_errors(ERR_TEXTURE_INVALID, NULL, NULL);
+		print_errors(TEXTURE_INVALID, NULL, NULL);
 		return (false);
 	}
 	close(fd);
@@ -19,9 +19,14 @@ static int	set_texture_path(t_map *map, t_header_type id, const char *path)
 	char	*trimmed_value;
 
 	trimmed_value = ft_strtrim(path, " \t\n");
-	if (!trimmed_value || trimmed_value[0] == '\0')
+	if (!trimmed_value)
 	{
-		print_errors(ERR_TEXTURE_TRIM_FAIL, NULL, NULL);
+		print_errors(TEXTURE_TRIM_FAIL, NULL, NULL);
+		return (EXIT_FAILURE);
+	}
+	if (trimmed_value[0] == '\0')
+	{
+		print_errors(TEXTURE_EMPTY, NULL, NULL);
 		free(trimmed_value);
 		return (EXIT_FAILURE);
 	}
@@ -75,7 +80,10 @@ int	parse_header_line(t_map *map, char *line)
 		i++;
 	entry = get_header_entry(line + i);
 	if (!entry)
+	{
+		print_errors(HEADER_INVALID, NULL, NULL);
 		return (EXIT_FAILURE);
+	}
 	i += entry->len;
 	if (!ft_isspace(line[i]))
 		return (EXIT_FAILURE);
