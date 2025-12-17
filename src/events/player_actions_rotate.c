@@ -7,7 +7,7 @@
  * by the given angle using 2D rotation matrix transformation.
  *
  * @param game Pointer to game structure
- * @param angle Rotation angle in radians (positive = clockwise)
+ * @param angle Rotation angle in radians (positive = counter-clockwise)
  */
 void	apply_camera_rotation(t_game *game, double angle)
 {
