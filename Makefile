@@ -36,7 +36,7 @@ SRC =	src/main.c \
 		src/init/init_mlx.c \
 		src/parsing/file_validations.c \
 		src/parsing/header_table.c \
-		src/parsing/parse_color.c \
+		src/parsing/parse_rgb.c \
 		src/parsing/parse_header.c \
 		src/parsing/parse_header_line.c \
 		src/parsing/parse_map.c \
