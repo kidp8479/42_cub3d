@@ -5,6 +5,7 @@
  *
  * Checks collision at target position and updates player coordinates
  * only if the position is walkable (not a wall).
+ * Includes bounds checking to prevent out-of-bounds access.
  *
  * @param game Pointer to game structure
  * @param new_x Target X coordinate
@@ -12,7 +13,15 @@
  */
 static void	try_move(t_game *game, double new_x, double new_y)
 {
-	if (game->map.grid[(int)new_y][(int)new_x] != '1')
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)new_x;
+	map_y = (int)new_y;
+	if (map_x < 0 || map_y < 0
+		|| map_x >= game->map.width || map_y >= game->map.height)
+		return ;
+	if (game->map.grid[map_y][map_x] != '1')
 	{
 		game->player.pos_x = new_x;
 		game->player.pos_y = new_y;
