@@ -55,7 +55,10 @@ static int	set_rgb_color(t_map *map, t_header_type id, const char *value)
 static int	parse_header_value(t_map *map, const char *value, t_header_type id)
 {
 	if (map->id_set[id] == true)
-		return (print_errors(HEADER_DUPLICATE, NULL, NULL), EXIT_FAILURE);
+	{
+		print_errors(HEADER_DUPLICATE, NULL, NULL);
+		return (EXIT_FAILURE);
+	}
 	if (id >= ID_NO && id <= ID_EA)
 	{
 		if (set_texture_path(map, id, value) == EXIT_FAILURE)
@@ -80,10 +83,7 @@ int	parse_header_line(t_map *map, char *line)
 		i++;
 	entry = get_header_entry(line + i);
 	if (!entry)
-	{
-		print_errors(HEADER_INVALID, NULL, NULL);
 		return (EXIT_FAILURE);
-	}
 	i += entry->len;
 	if (!ft_isspace(line[i]))
 		return (EXIT_FAILURE);
