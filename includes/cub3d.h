@@ -45,6 +45,8 @@
 # define WINDOWS_X 1920
 # define WINDOWS_Y 1080
 # define WINDOWS_MSG "Welcome to CUB3D"
+// minimum wall distance to prevent division by zero in projection
+# define MIN_WALL_DISTANCE 0.001
 // movement speed constant (units per frame)
 // smaller = slower, larger = faster
 # define MOVE_SPEED 0.05
@@ -66,21 +68,34 @@ typedef enum e_wall_dir
 	WEST = 3
 }	t_wall_dir;
 
+/* Header type enumeration for parsing .cub files */
+typedef enum e_header_type
+{
+	NO = 0,
+	SO = 1,
+	WE = 2,
+	EA = 3,
+	F = 4,
+	C = 5,
+	TEX_SIZE = 4,
+	HEADER_SIZE = 6,
+	RGB_SIZE = 3
+}	t_header_type;
+
 /* map structure - stores parsed .cub file data */
 typedef struct s_map
 {
-	char	**grid;			// 2d array of chars that represents the map layout
-							// ex: '1' = wall, '0' = empty space, 'N' = player, etc.
-	int		width;			// width of the map (max number of columns)
-							// useful for checking map boundaries
-	int		height;			// height of the map (number of lines)
-							// used to loop over the map safely
-	char	*no_path;		// file path for north wall texture (from .cub file)
-	char	*so_path;		// file path for south wall texture
-	char	*we_path;		// file path for west wall texture
-	char	*ea_path;		// file path for east wall texture
-	int		floor_color;	// rgb color for the floor, converted to int (0xRRGGBB)
-	int		ceiling_color;	// rgb color for the ceiling, converted to int (0xRRGGBB)
+	char	**grid;				// 2d array of chars that represents the map layout
+								// ex: '1' = wall, '0' = empty space, 'N' = player, etc.
+	int		width;				// width of the map (max number of columns)
+								// useful for checking map boundaries
+	int		height;				// height of the map (number of lines)
+								// used to loop over the map safely
+	char	*tex_paths[TEX_SIZE];	// array of texture file paths [NO, SO, WE, EA]
+	int		floor_color[RGB_SIZE];	// floor color as [R, G, B] (0-255 per channel)
+	int		ceiling_color[RGB_SIZE];// ceiling color as [R, G, B] (0-255 per channel)
+	bool	id_set[HEADER_SIZE];	// tracks which headers have been parsed
+	int		map_start_line;		// line number where map grid starts in .cub file
 }	t_map;
 
 /* Tracks which keys are currently pressed */
@@ -105,6 +120,18 @@ typedef struct s_player
 	double	plane_y;
 }	t_player;
 
+/* Texture data loaded from .xpm files */
+typedef struct s_texture
+{
+	void	*img;			// MLX image pointer (from mlx_xpm_file_to_image)
+	char	*addr;			// Pixel data address (from mlx_get_data_addr)
+	int		width;			// Texture width in pixels
+	int		height;			// Texture height in pixels
+	int		bpp;			// Bits per pixel
+	int		line_len;		// Number of bytes per line
+	int		endian;			// Endian format
+}	t_texture;
+
 /* Encapsulates the entire game state and resources */
 typedef struct s_game
 {
@@ -118,7 +145,7 @@ typedef struct s_game
 	int			img_line_len;	// number of bytes in a line of the image (from mlx_get_data_addr)
 	int			img_endian;	// endian format of the image (from mlx_get_data_addr)
 	// === Assets ===
-	// t_tex	   textures[4]; // array of 4 loaded textures (NO, SO, WE, EA)
+	t_texture	textures[4];	// array of 4 loaded textures [0]=NO, [1]=SO, [2]=WE, [3]=EA
 	// === Game state ===
 	t_player	player;		// player data (position, direction, camera plane)
 	t_map		map;			// map data (grid, size, textures paths, colors)
@@ -161,6 +188,26 @@ typedef struct s_ray
 	int		step_y;			// Step direction in Y (either +1 or -1)
 	int		side;			// Was wall hit on X-side (0) or Y-side (1)?
 }	t_ray;
+
+ /* Column drawing parameters for rendering */
+typedef struct s_col
+{
+	int	x;
+	int	start;
+	int	end;
+	int	color;
+}	t_col;
+
+/* Drawing info for a complete column (ceiling + wall + floor) */
+typedef struct s_draw_info
+{
+	int	x;
+	int	draw_start;
+	int	draw_end;
+	int	ceiling;
+	int	wall;
+	int	floor;
+}	t_draw_info;
 
 /* =========================== */
 /*           EVENT             */
@@ -238,7 +285,7 @@ int				check_valid_map(t_map *map);
 void			draw_pixel_in_buffer(t_game *game, int x, int y, int color);
 
 /* =========================== */
-/*         RAYCASTING          */
+/*         RAYCAST             */
 /* =========================== */
 
 /* dda.c */
@@ -247,6 +294,9 @@ double			cast_ray(t_game *game, double ray_dir_x, double ray_dir_y,
 
 /* dda_utils.c */
 bool			check_hit(t_game *game, t_ray *ray);
+
+/* raycast_utils.c */
+int				get_wall_color(int wall_dir);
 
 /* raycast.c */
 void			render_frame(t_game *game);
@@ -258,7 +308,10 @@ void			render_frame(t_game *game);
 /* ascii art */
 void			print_ascii_art_hello(void);
 
-/* utils/print_errors.c */
+/* print_errors.c */
 void			print_errors(char *p1, char *p2, char *p3);
+
+/* rgb_tab_to_int.c */
+int				rgb_tab_to_int(int rgb[RGB_SIZE]);
 
 #endif

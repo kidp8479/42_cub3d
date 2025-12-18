@@ -42,12 +42,14 @@ SRC =	src/main.c \
 		src/render/draw_pixels.c \
 		src/raycast/dda.c \
 		src/raycast/dda_utils.c \
+		src/raycast/raycast_utils.c \
 		src/raycast/raycast.c \
 		src/parsing/player_setup.c \
 		src/parsing/player_setup_utils.c \
 		src/parsing/validate_map.c \
 		src/utils/ascii_art.c \
 		src/utils/print_errors.c \
+		src/utils/rgb_tab_to_int.c \
 
 # object files preserving subdirectory structure
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

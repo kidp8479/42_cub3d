@@ -1,24 +1,6 @@
 #include "cub3d.h"
 
 /**
- * @brief Returns wall color based on direction
- *
- * @param wall_dir Wall direction (NORTH/SOUTH/EAST/WEST)
- * @return Color in 0xRRGGBB format
- */
-static int	get_wall_color(int wall_dir)
-{
-	if (wall_dir == NORTH)
-		return (0xFF0000);
-	else if (wall_dir == SOUTH)
-		return (0x00FF00);
-	else if (wall_dir == EAST)
-		return (0x0000FF);
-	else
-		return (0xFFFF00);
-}
-
-/**
  * @brief Draws a vertical slice of pixels
  *
  * @param game Pointer to game structure
@@ -27,17 +9,45 @@ static int	get_wall_color(int wall_dir)
  * @param end Ending Y coordinate
  * @param color Color to draw
  */
-static void	draw_column_slice(t_game *game, int x, int start, int end,
-	int color)
+static void	draw_column_slice(t_game *game, t_col column)
 {
 	int	y;
 
-	y = start;
-	while (y <= end)
+	y = column.start;
+	while (y <= column.end)
 	{
-		draw_pixel_in_buffer(game, x, y, color);
+		draw_pixel_in_buffer(game, column.x, y, column.color);
 		y++;
 	}
+}
+
+/**
+ * @brief Draws a complete column with ceiling, wall, and floor
+ *
+ * Helper function that draws all three vertical slices using the
+ * provided drawing information. Delegates to draw_column_slice for
+ * each section.
+ *
+ * @param game Pointer to game structure
+ * @param info Drawing info containing positions and colors
+ */
+static void	draw_full_column(t_game *game, t_draw_info info)
+{
+	t_col	col;
+
+	col.x = info.x;
+	col.start = 0;
+	col.end = info.draw_start - 1;
+	col.color = info.ceiling;
+	draw_column_slice(game, col);
+	col.start = info.draw_start;
+	col.end = info.draw_end;
+	col.color = info.wall;
+	draw_column_slice(game, col);
+	col.start = info.draw_end + 1;
+	col.end = WINDOWS_Y - 1;
+	col.color = info.floor;
+	draw_column_slice(game, col);
 }
 
 /**
@@ -54,12 +64,13 @@ static void	draw_column_slice(t_game *game, int x, int start, int end,
 static void	draw_wall_column(t_game *game, int x, double wall_distance,
 	int wall_dir)
 {
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	t_draw_info	info;
 
-	if (wall_distance < 0.001)
-		wall_distance = 0.001;
+	if (wall_distance < MIN_WALL_DISTANCE)
+		wall_distance = MIN_WALL_DISTANCE;
 	line_height = (int)(WINDOWS_Y / wall_distance);
 	draw_start = (WINDOWS_Y - line_height) / 2;
 	draw_end = draw_start + line_height - 1;
@@ -67,10 +78,13 @@ static void	draw_wall_column(t_game *game, int x, double wall_distance,
 		draw_start = 0;
 	if (draw_end >= WINDOWS_Y)
 		draw_end = WINDOWS_Y - 1;
-	draw_column_slice(game, x, 0, draw_start - 1, game->map.ceiling_color);
-	draw_column_slice(game, x, draw_start, draw_end, get_wall_color(wall_dir));
-	draw_column_slice(game, x, draw_end + 1, WINDOWS_Y - 1,
-		game->map.floor_color);
+	info.x = x;
+	info.draw_start = draw_start;
+	info.draw_end = draw_end;
+	info.ceiling = rgb_tab_to_int(game->map.ceiling_color);
+	info.wall = get_wall_color(wall_dir);
+	info.floor = rgb_tab_to_int(game->map.floor_color);
+	draw_full_column(game, info);
 }
 
 /**
