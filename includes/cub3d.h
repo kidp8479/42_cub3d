@@ -217,12 +217,14 @@ typedef struct s_col
 /* Drawing info for a complete column (ceiling + wall + floor) */
 typedef struct s_draw_info
 {
-	int	x;
-	int	draw_start;
-	int	draw_end;
-	int	ceiling;
-	int	wall;
-	int	floor;
+	int		x;
+	int		draw_start;
+	int		draw_end;
+	int		ceiling;
+	int		wall;
+	int		floor;
+	int		wall_dir;
+	double	wall_x;
 }	t_draw_info;
 
 /* =========================== */

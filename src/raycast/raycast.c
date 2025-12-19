@@ -58,20 +58,18 @@ static void	draw_full_column(t_game *game, t_draw_info info)
  *
  * @param game Pointer to the game structure
  * @param x Screen column position (0 to WINDOWS_X-1)
- * @param wall_distance Perpendicular distance to the wall
- * @param wall_dir Wall direction (0=NORTH, 1=SOUTH, 2=EAST, 3=WEST)
+ * @param result Ray result containing wall distance, direction, and hit position
  */
-static void	draw_wall_column(t_game *game, int x, double wall_distance,
-	int wall_dir)
+static void	draw_wall_column(t_game *game, int x, t_ray_result result)
 {
 	int			line_height;
 	int			draw_start;
 	int			draw_end;
 	t_draw_info	info;
 
-	if (wall_distance < MIN_WALL_DISTANCE)
-		wall_distance = MIN_WALL_DISTANCE;
-	line_height = (int)(WINDOWS_Y / wall_distance);
+	if (result.wall_dist < MIN_WALL_DISTANCE)
+		result.wall_dist = MIN_WALL_DISTANCE;
+	line_height = (int)(WINDOWS_Y / result.wall_dist);
 	draw_start = (WINDOWS_Y - line_height) / 2;
 	draw_end = draw_start + line_height - 1;
 	if (draw_start < 0)
@@ -82,8 +80,10 @@ static void	draw_wall_column(t_game *game, int x, double wall_distance,
 	info.draw_start = draw_start;
 	info.draw_end = draw_end;
 	info.ceiling = rgb_tab_to_int(game->map.ceiling_color);
-	info.wall = get_wall_color(wall_dir);
+	info.wall = get_wall_color(result.wall_dir);
 	info.floor = rgb_tab_to_int(game->map.floor_color);
+	info.wall_dir = result.wall_dir;
+	info.wall_x = result.wall_x;
 	draw_full_column(game, info);
 }
 
@@ -109,7 +109,7 @@ static void	cast_column_ray(t_game *game, int x)
 	ray_dir_x = game->player.dir_x + game->player.plane_x * camera_x;
 	ray_dir_y = game->player.dir_y + game->player.plane_y * camera_x;
 	result = cast_ray(game, ray_dir_x, ray_dir_y);
-	draw_wall_column(game, x, result.wall_dist, result.wall_dir);
+	draw_wall_column(game, x, result);
 }
 
 /**
