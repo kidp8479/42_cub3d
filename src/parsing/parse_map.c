@@ -23,6 +23,7 @@ static int	get_map_dimensions(const char *path, t_map *map)
 	fd = open_cub_file(path);
 	if (fd < 0)
 		return (EXIT_FAILURE);
+	gnl_clear_fd(fd);
 	i = 0;
 	line = get_next_line(fd);
 	while (line)
@@ -35,10 +36,9 @@ static int	get_map_dimensions(const char *path, t_map *map)
 			map->width = max_int(map->width, len);
 			map->height++;
 		}
-		free(line);
-		line = get_next_line(fd);
-		i++;
+		next_line(&line, fd, &i);
 	}
+	gnl_clear_fd(fd);
 	return (close(fd), EXIT_SUCCESS);
 }
 
@@ -118,6 +118,7 @@ static int	load_map_grid(const char *path, t_map *map)
 	fd = open_cub_file(path);
 	if (fd < 0)
 		return (EXIT_FAILURE);
+	gnl_clear_fd(fd);
 	map->grid = malloc(sizeof (char *) * map->height);
 	if (!map->grid)
 		return (close(fd), EXIT_FAILURE);
@@ -128,11 +129,11 @@ static int	load_map_grid(const char *path, t_map *map)
 	{
 		if (store_map_line(map, i, &y, line) == EXIT_FAILURE)
 			return (free(line), close(fd), EXIT_FAILURE);
-		free(line);
-		i++;
-		line = get_next_line(fd);
+		next_line(&line, fd, &i);
 	}
-	return (close(fd), EXIT_SUCCESS);
+	gnl_clear_fd(fd);
+	close(fd);
+	return (EXIT_SUCCESS);
 }
 
 /**

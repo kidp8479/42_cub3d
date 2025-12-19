@@ -1,23 +1,6 @@
 #include "cub3d.h"
 
 /**
- * @brief Advance to the next line in the file.
- *
- * Frees the current line, reads the next line from the file, and
- * increments the line counter.
- *
- * @param line Pointer to the current line buffer.
- * @param fd   File descriptor to read from.
- * @param i    Pointer to current line index (will be incremented).
- */
-static void	next_line(char **line, int fd, int *i)
-{
-	free(*line);
-	*line = get_next_line(fd);
-	(*i)++;
-}
-
-/**
  * @brief Skip consecutive empty lines in a file while reading.
  *
  * Frees each empty line and reads the next line from the file.

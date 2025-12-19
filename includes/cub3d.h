@@ -225,6 +225,7 @@ int				validate_argument(char *filename);
 const t_header_entry	*get_header_entry(const char *line);
 
 /* header_utils.c */
+void			next_line(char **line, int fd, int *i);
 bool			line_is_empty(char *line);
 
 /* parse_header.c */
