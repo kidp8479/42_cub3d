@@ -1,5 +1,11 @@
 #include "cub3d.h"
 
+/**
+ * @brief Check if a line matches a valid header identifier
+ *
+ * Skips leading whitespace and verifies the line starts with
+ * a known header entry.
+ */
 static bool	is_header_line(const char *line)
 {
 	size_t	i;
@@ -10,6 +16,11 @@ static bool	is_header_line(const char *line)
 	return (get_header_entry(line + i) != NULL);
 }
 
+/**
+ * @brief Count consecutive header lines at the start of a file
+ *
+ * Stops counting on the first non-header, non-empty line.
+ */
 static int	count_header_lines(int fd)
 {
 	char	*line;
@@ -37,6 +48,11 @@ static int	count_header_lines(int fd)
 	return (count);
 }
 
+/**
+ * @brief Validate the number of headers in a .cub file
+ *
+ * Ensures the file contains exactly HEADER_SIZE identifiers.
+ */
 int	check_header_count(const char *path)
 {
 	int		fd;
@@ -46,6 +62,7 @@ int	check_header_count(const char *path)
 	if (fd < 0)
 		return (EXIT_FAILURE);
 	count = count_header_lines(fd);
+	gnl_clear_fd(fd);
 	close(fd);
 	if (count < HEADER_SIZE)
 	{
