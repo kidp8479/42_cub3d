@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#define EXPECTED_MAP_START_LINE 9
+#define EXPECTED_MAP_START_LINE 8
 
 typedef struct s_header_test
 {

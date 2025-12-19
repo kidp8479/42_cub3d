@@ -1,3 +1,23 @@
+/**
+ * @file test_validate_map.integ.c
+ * @brief Integration tests for the validate_map() function in cub3d.
+ *
+ * This test program validates full map correctness after parsing.
+ * It checks:
+ *   - Map enclosure by walls
+ *   - Valid map characters
+ *   - Exactly one player start position
+ *   - Proper handling of spaces and padded areas
+ *   - Detection of invalid or open maps
+ *
+ * Usage:
+ *   Build: make build TEST=unit/test_validate_map.integ.c
+ *   Run:   ./bin/test_validate_map /path_to_cubfile
+ *   Run script: ./test_validate_map_integ.sh
+ *
+ * Each test uses a real .cub file, parses the map, runs validate_map(),
+ * and uses assertions to verify correct behavior.
+ */
 #include "cub3d.h"
 
 int	main(int argc, char **argv)
@@ -27,17 +47,17 @@ int	main(int argc, char **argv)
 	if (init_player(&game) != EXIT_SUCCESS)
 	{
 		printf(RED "[FAIL] init_player\n" RESET);
-		free_map(&game.map);
+		free_t_map(&game.map);
 		return (EXIT_FAILURE);
 	}
 	print_map_grid(&game.map);
 	if (check_valid_map(&game.map) != EXIT_SUCCESS)
 	{
 		printf(RED "[FAIL] check_valid_map\n" RESET);
-		free_map(&game.map);
+		free_t_map(&game.map);
 		return (EXIT_FAILURE);
 	}
 	printf(GRN "[OK] Map is valid\n" RESET);
-	free_map(&game.map);
+	free_t_map(&game.map);
 	return (EXIT_SUCCESS);
 }
