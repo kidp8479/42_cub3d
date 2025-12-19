@@ -34,6 +34,9 @@
 # define WIN_INIT "Initialization of the MLX windows failed"
 # define IMG_INIT "Initialization of the MLX image buffer failed"
 # define IMG_DATA "Retrieving IMG data failed"
+# define TEXTURE_LOAD "Failed to load texture"
+# define TEXTURE_DIMENSION "Texture is not 64x64"
+# define TEXTURE_DATA "Failed to retrieved necessary textures data"
 
 /* map constants */
 # define PLAYER "NSEW"
@@ -44,6 +47,8 @@
 /* game elements */
 # define WINDOWS_X 1920
 # define WINDOWS_Y 1080
+# define TEXTURE_WIDTH 64
+# define TEXTURE_HEIGHT 64
 # define WINDOWS_MSG "Welcome to CUB3D"
 // minimum wall distance to prevent division by zero in projection
 # define MIN_WALL_DISTANCE 0.001
@@ -250,6 +255,9 @@ int				load_and_validate_map(char *path, t_game *game);
 
 /* init_mlx.c */
 int				init_game_data(t_game *game);
+
+/* init_textures.c */
+int				init_texture(t_game *game);
 
 /* =========================== */
 /*         PARSING             */
