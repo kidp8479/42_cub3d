@@ -1,5 +1,11 @@
 #include "cub3d.h"
 
+/**
+ * @brief Verify that a texture file exists and can be opened
+ *
+ * Attempts to open the texture path in read-only mode.
+ * Prints an error if the file is missing or inaccessible.
+ */
 static bool	validate_texture_file(const char *filename)
 {
 	int	fd;
@@ -14,6 +20,13 @@ static bool	validate_texture_file(const char *filename)
 	return (true);
 }
 
+/**
+ * @brief Validate and store a texture path for a given header id
+ *
+ * Trims surrounding whitespace, checks for empty paths,
+ * validates file existence, and stores the path in the map.
+ * Replaces any previously stored path for the same id.
+ */
 static int	set_texture_path(t_map *map, t_header_type id, const char *path)
 {
 	char	*trimmed_value;
@@ -35,16 +48,24 @@ static int	set_texture_path(t_map *map, t_header_type id, const char *path)
 		free(trimmed_value);
 		return (EXIT_FAILURE);
 	}
+	if (map->tex_paths[id])
+		free(map->tex_paths[id]);
 	map->tex_paths[id] = trimmed_value;
 	return (EXIT_SUCCESS);
 }
 
+/**
+ * @brief Parse and assign an RGB color value to floor or ceiling
+ *
+ * Selects the correct color target based on the header id
+ * and validates the RGB format and numeric ranges.
+ */
 static int	set_rgb_color(t_map *map, t_header_type id, const char *value)
 {
 	int	*rgb_values;
 
 	if (id == ID_FLOOR)
-		rgb_values = map->floor_color;//points to first value of array
+		rgb_values = map->floor_color;
 	else
 		rgb_values = map->ceiling_color;
 	if (parse_rgb(value, rgb_values) == EXIT_FAILURE)
@@ -52,6 +73,12 @@ static int	set_rgb_color(t_map *map, t_header_type id, const char *value)
 	return (EXIT_SUCCESS);
 }
 
+/**
+ * @brief Parse and apply a header value based on its identifier
+ *
+ * Detects duplicate headers, dispatches texture or color
+ * parsing, and marks the identifier as successfully set.
+ */
 static int	parse_header_value(t_map *map, const char *value, t_header_type id)
 {
 	if (map->id_set[id] == true)
@@ -73,6 +100,13 @@ static int	parse_header_value(t_map *map, const char *value, t_header_type id)
 	return (EXIT_SUCCESS);
 }
 
+/**
+ * @brief Parse a single header line from the .cub file
+ *
+ * Skips leading whitespace, identifies the header entry,
+ * validates spacing, and parses the associated value.
+ * Returns EXIT_FAILURE on malformed or unknown headers.
+ */
 int	parse_header_line(t_map *map, char *line)
 {
 	int						i;
