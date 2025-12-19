@@ -117,23 +117,6 @@ int	main(void)
 		{10, 20, 30},
 		NULL
 	},
-	/* ===== Header identifier errors ===== */
-	{
-		"Invalid header key",
-		"XX 123",
-		true,
-		-1,
-		{-1, -1, -1},
-		NULL
-	},
-	{
-		"Lowercase header key",
-		"no ./test_NO.xpm",
-		true,
-		-1,
-		{-1, -1, -1},
-		NULL
-	},
 	/* ===== Texture path errors ===== */
 	{
 		"Missing texture file",

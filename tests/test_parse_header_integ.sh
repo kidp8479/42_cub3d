@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TEST_BIN="bin/test_parse_header_integ"
-MAP_DIR="../maps/test_cub_files/"
+MAP_DIR="../maps/test_cub_files"
 #MAP_DIR="../maps"
 
 echo "=== Running integration tests for all .cub maps ==="
@@ -16,7 +16,7 @@ for map in "$MAP_DIR"/*.cub; do
 	if [ $STATUS -eq 0 ]; then
 		echo -e "\033[32m[OK]\033[0m Test passed for $map"
 	else
-		echo -e "\033[31m[FAIL]\033[0m Test failed for $map (exit code $STATUS)"
+		echo -e "\033[31m[FAIL]\033[0m Test failed for $map"
 	fi
 done
 

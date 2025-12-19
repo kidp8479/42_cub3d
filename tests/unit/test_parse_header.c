@@ -98,6 +98,12 @@ int	main(void)
 		false,
 		EXPECTED_MAP_START_LINE + 6
 	},
+	{
+		"Header ID in random order",
+		"../maps/test_headers/header_id_random_order.cub",
+		false,
+		EXPECTED_MAP_START_LINE
+	},
 	};
 
 	printf(YEL "================ parse_header Tests =================" RESET "\n");
