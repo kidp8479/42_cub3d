@@ -1,10 +1,17 @@
 #include "cub3d.h"
 
 /**
- * @brief Reads the .cub file to determine map width and height.
+ * @brief Compute map width and height from a .cub file.
+ *
+ * Reads the file line by line and counts only lines belonging to the map,
+ * starting at map->map_start_line. The map width is set to the length of
+ * the longest map line (excluding the trailing newline). The map height
+ * is the number of map lines.
+ *
  * @param path Path to the .cub file.
- * @param map Pointer to t_map structure to store dimensions.
- * @return 0 on success, 1 on failure.
+ * @param map  Pointer to the map structure to fill dimensions.
+ *
+ * @return EXIT_SUCCESS on success, EXIT_FAILURE on file open error.
  */
 static int	get_map_dimensions(const char *path, t_map *map)
 {
@@ -16,7 +23,6 @@ static int	get_map_dimensions(const char *path, t_map *map)
 	fd = open_cub_file(path);
 	if (fd < 0)
 		return (EXIT_FAILURE);
-	//len = 0;
 	i = 0;
 	line = get_next_line(fd);
 	while (line)
@@ -24,6 +30,8 @@ static int	get_map_dimensions(const char *path, t_map *map)
 		if (i >= map->map_start_line)
 		{
 			len = ft_strlen(line);
+			if (line[len - 1] == '\n')
+				len--;
 			map->width = max_int(map->width, len);
 			map->height++;
 		}
@@ -31,8 +39,7 @@ static int	get_map_dimensions(const char *path, t_map *map)
 		line = get_next_line(fd);
 		i++;
 	}
-	close(fd);
-	return (EXIT_SUCCESS);
+	return (close(fd), EXIT_SUCCESS);
 }
 
 /**
@@ -78,7 +85,7 @@ static char	*pad_line(const char *row, int width)
 static int	store_map_line(t_map *map, int i, int *y, char *line)
 {
 	if (i < map->map_start_line)
-		return (EXIT_SUCCESS); //skip header lines
+		return (EXIT_SUCCESS);
 	map->grid[*y] = pad_line(line, map->width);
 	if (!map->grid[*y])
 	{
@@ -131,7 +138,6 @@ static int	load_map_grid(const char *path, t_map *map)
 /**
  * @brief Parses a .cub file and fills the t_map structure.
  * 
- * This is the public function to be called from main.c or other modules.
  * It reads the .cub file, calculates dimensions, and loads the grid.
  *
  * @param path Path to the .cub file.
