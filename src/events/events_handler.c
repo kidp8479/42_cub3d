@@ -17,10 +17,14 @@ t_key_binding	*get_key_bindings(t_game *game)
 
 	if (!initialized)
 	{
-		bindings[0] = (t_key_binding){XK_w, move_forward, &game->keys.w_pressed};
-		bindings[1] = (t_key_binding){XK_s, move_backward, &game->keys.s_pressed};
-		bindings[2] = (t_key_binding){XK_a, strafe_left, &game->keys.a_pressed};
-		bindings[3] = (t_key_binding){XK_d, strafe_right, &game->keys.d_pressed};
+		bindings[0] = (t_key_binding){XK_w, move_forward,
+			&game->keys.w_pressed};
+		bindings[1] = (t_key_binding){XK_s, move_backward,
+			&game->keys.s_pressed};
+		bindings[2] = (t_key_binding){XK_a, strafe_left,
+			&game->keys.a_pressed};
+		bindings[3] = (t_key_binding){XK_d, strafe_right,
+			&game->keys.d_pressed};
 		bindings[4] = (t_key_binding){XK_Left, rotate_left,
 			&game->keys.left_arrow_pressed};
 		bindings[5] = (t_key_binding){XK_Right, rotate_right,

@@ -4,7 +4,8 @@
  * @brief Handles mouse movement for FPS-style camera rotation
  *
  * Implements infinite rotation by recentering the cursor after each movement.
- * This prevents the cursor from hitting screen edges and allows continuous rotation.
+ * This prevents the cursor from hitting screen edges and allows continuous
+ * rotation.
  * Only handles horizontal rotation (yaw), not vertical (pitch).
  *
  * @param x Current mouse X position in window coordinates

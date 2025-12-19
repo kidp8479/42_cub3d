@@ -18,3 +18,7 @@ int	get_wall_color(int wall_dir)
 		return (0xFFFF00);
 }
 
+int	get_texture_pixel(t_texture *texture, int tex_x, int tex_y)
+{
+	
+}
