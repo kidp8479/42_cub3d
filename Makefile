@@ -36,6 +36,7 @@ SRC =	src/main.c \
 		src/events/mouse_handler.c \
 		src/init/init_data.c \
 		src/init/init_mlx.c \
+		src/init/init_textures.c \
 		src/parsing/file_validations.c \
 		src/parsing/parse_map.c \
 		src/parsing/parse_map_utils.c \

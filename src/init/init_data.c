@@ -2,7 +2,7 @@
 
 /**
  * @brief Initializes the game data structure to a clean state.
- * 
+ *
  * This function zeroes out the entire t_game structure, including
  * all nested structs such as t_map and t_player.
  *
