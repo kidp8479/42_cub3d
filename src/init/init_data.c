@@ -21,22 +21,48 @@ void	init_data(t_game *game)
 	game->last_mouse_y = WINDOWS_Y / 2;
 }
 
+/**
+ * @brief Loads, parses, and validates a .cub map file.
+ *
+ * This function performs the full map loading pipeline:
+ *   - Validates the input file path and extension
+ *   - Initializes game and map data structures
+ *   - Verifies header count and parses all headers
+ *   - Parses and loads the map grid into memory
+ *   - Initializes the player position and direction
+ *   - Validates map enclosure and contents
+ *
+ * On failure, all allocated map resources are freed before
+ * returning EXIT_FAILURE.
+ *
+ * @param path Path to the .cub file.
+ * @param game Pointer to the game structure to initialize.
+ *
+ * @return EXIT_SUCCESS on success, EXIT_FAILURE on error.
+ */
 int	load_and_validate_map(char *path, t_game *game)
 {
 	if (validate_argument(path) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	init_data(game);
-	if (parse_map(path, &game->map) != EXIT_SUCCESS)
+	if (check_header_count(path) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
+	if (parse_header(path, &game->map) != EXIT_SUCCESS)
+	{
+		free_t_map(&game->map);
+		return (EXIT_FAILURE);
+	}
+	if (parse_map(path, &game->map) != EXIT_SUCCESS)
+	{
+		free_t_map(&game->map);
+		return (EXIT_FAILURE);
+	}
 	if (init_player(game) != EXIT_SUCCESS)
 	{
-		free_map_grid(&game->map);
+		free_t_map(&game->map);
 		return (EXIT_FAILURE);
 	}
 	if (check_valid_map(&game->map) != EXIT_SUCCESS)
-	{
-		free_map_grid(&game->map);
-		return (EXIT_FAILURE);
-	}
+		return (free_t_map(&game->map), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
