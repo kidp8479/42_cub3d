@@ -20,3 +20,29 @@ bool	check_hit(t_game *game, t_ray *ray)
 		return (true);
 	return (false);
 }
+
+/**
+ * @brief Calculates the exact hit position on the wall (0.0 to 1.0)
+ *
+ * Determines where on the wall surface the ray hit, needed for
+ * texture mapping. The formula depends on whether a vertical or
+ * horizontal wall was hit.
+ *
+ * @param ray Pointer to the ray structure
+ * @param pos_x Player's X position
+ * @param pos_y Player's Y position
+ * @param wall_dist Perpendicular distance to the wall
+ * @return Wall hit position as a value between 0.0 and 1.0
+*/
+double	calculate_wall_x(t_ray *ray, double pos_x, double pos_y,
+		double wall_dist)
+{
+	double	wall_x;
+
+	if (ray->side == VERTICAL_WALL)
+		wall_x = pos_y + wall_dist * ray->dir_y;
+	else
+		wall_x = pos_x + wall_dist * ray->dir_x;
+	wall_x = wall_x - floor(wall_x);
+	return (wall_x);
+}

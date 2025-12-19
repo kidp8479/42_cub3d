@@ -17,3 +17,4 @@ int	get_wall_color(int wall_dir)
 	else
 		return (0xFFFF00);
 }
+

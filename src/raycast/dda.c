@@ -74,13 +74,13 @@ static void	perform_dda(t_game *game, t_ray *ray)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
 			ray->map_x += ray->step_x;
-			ray->side = 0;
+			ray->side = VERTICAL_WALL;
 		}
 		else
 		{
 			ray->side_dist_y += ray->delta_dist_y;
 			ray->map_y += ray->step_y;
-			ray->side = 1;
+			ray->side = HORIZONTAL_WALL;
 		}
 		hit = check_hit(game, ray);
 	}
@@ -99,7 +99,7 @@ static double	calculate_wall_distance(t_ray *ray)
 {
 	double	perp_wall_dist;
 
-	if (ray->side == 0)
+	if (ray->side == VERTICAL_WALL)
 		perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 	else
 		perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
@@ -134,7 +134,7 @@ double	cast_ray(t_game *game, double ray_dir_x, double ray_dir_y, int *side)
 	// perform DDA to find wall
 	perform_dda(game, &ray);
 	// determine wall direction based on ray step direction
-	if (ray.side == 0)
+	if (ray.side == VERTICAL_WALL)
 	{
 		if (ray.step_x > 0)
 			*side = EAST;
