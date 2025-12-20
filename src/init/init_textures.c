@@ -37,7 +37,7 @@ static int	load_texture(t_game *game, t_texture *texture, char *path)
 }
 
 /**
-  * @brief Loads all 4 wall textures (NORTH, SOUTH, WEST, EAST)
+  * @brief Loads all 4 wall textures (NO, SO, WE, EA)
   *
   * Iterates through tex_paths array and loads each texture using load_texture().
   * Uses t_header_type enum values for array indexing.

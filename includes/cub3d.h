@@ -69,16 +69,7 @@
 /*        STRUCTURES           */
 /* =========================== */
 
-/* Wall direction enumeration for raycasting */
-typedef enum e_wall_dir
-{
-	NORTH = 0,
-	SOUTH = 1,
-	EAST = 2,
-	WEST = 3
-}	t_wall_dir;
-
-/* Header type enumeration for parsing .cub files */
+/* Header type enumeration for parsing .cub files and wall directions */
 typedef enum e_header_type
 {
 	NO = 0,
@@ -180,7 +171,7 @@ typedef struct s_key_binding
 {
 	int		keycode; // X11 keycode for this specific key (ex: XK_w, XK_Left)
 	void	(*action)(t_game *); // function pointer to the action that should be executed
-	bool	*flag_ptr;  // Pointer to the boolean flag that represents whether this key is currently pressed (true) or released (false)
+	bool	*flag_ptr; // Pointer to the boolean flag that represents whether this key is currently pressed (true) or released (false)
 }	t_key_binding;
 
 /* Ray structure for raycasting calculation */
@@ -203,11 +194,11 @@ typedef struct s_ray
 typedef struct s_ray_result
 {
 	double	wall_dist;	// Perpendicular distance to wall
-	int		wall_dir;	// Wall direction (NORTH/SOUTH/EAST/WEST)
+	int		wall_dir;	// Wall direction (NO/SO/WE/EA)
 	double	wall_x;		// Hit position on wall (0.0 to 1.0)
 }	t_ray_result;
 
- /* Column drawing parameters for rendering */
+/* Column drawing parameters for rendering */
 typedef struct s_col
 {
 	int	x;
@@ -224,7 +215,6 @@ typedef struct s_draw_info
 	int		draw_end;
 	int		line_height;
 	int		ceiling;
-	int		wall;
 	int		floor;
 	int		wall_dir;
 	double	wall_x;
@@ -322,7 +312,6 @@ double			calculate_wall_x(t_ray *ray, double pos_x, double pos_y,
 int				get_wall_direction(t_ray *ray);
 
 /* raycast_utils.c */
-int				get_wall_color(int wall_dir);
 int				calculate_tex_x(double wall_x);
 int				get_texture_pixel(t_texture *texture, int tex_x, int tex_y);
 void			draw_textured_wall_slice(t_game *game, t_draw_info info);

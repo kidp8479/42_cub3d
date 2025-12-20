@@ -52,19 +52,20 @@ double	calculate_wall_x(t_ray *ray, double pos_x, double pos_y,
  *
  * Uses ray side (vertical/horizontal) and step direction
  * to determine which cardinal direction wall faces.
+ * Returns texture index (NO/SO/WE/EA) matching texture array.
  *
  * @param ray Pointer to ray structure
- * @return Wall direction (NORTH, SOUTH, EAST, or WEST)
+ * @return Wall direction (NO, SO, WE, or EA)
  */
 int	get_wall_direction(t_ray *ray)
 {
 	if (ray->side == VERTICAL_WALL)
 	{
 		if (ray->step_x > 0)
-			return (EAST);
-		return (WEST);
+			return (EA);
+		return (WE);
 	}
 	if (ray->step_y > 0)
-		return (SOUTH);
-	return (NORTH);
+		return (SO);
+	return (NO);
 }

@@ -1,24 +1,6 @@
 #include "cub3d.h"
 
 /**
- * @brief Returns wall color based on direction
- *
- * @param wall_dir Wall direction (NORTH/SOUTH/EAST/WEST)
- * @return Color in 0xRRGGBB format
- */
-int	get_wall_color(int wall_dir)
-{
-	if (wall_dir == NORTH)
-		return (0xFF0000);
-	else if (wall_dir == SOUTH)
-		return (0x00FF00);
-	else if (wall_dir == EAST)
-		return (0x0000FF);
-	else
-		return (0xFFFF00);
-}
-
-/**
  * @brief Converts wall hit position to texture column coordinate
  *
  * Maps wall_x (0.0 to 1.0) to texture column (0 to TEXTURE_WIDTH-1).
@@ -51,7 +33,8 @@ int	calculate_tex_x(double wall_x)
  * @param texture Pointer to the texture structure
  * @param tex_x X coordinate in texture (0 to width-1)
  * @param tex_y Y coordinate in texture (0 to height-1)
- * @return Pixel color in 0xAARRGGBB format, or TEXTURE_FALLBACK_COLOR if out of bounds
+ * @return Pixel color in 0xAARRGGBB format, or TEXTURE_FALLBACK_COLOR
+ * if out of bounds
  */
 int	get_texture_pixel(t_texture *texture, int tex_x, int tex_y)
 {
@@ -75,7 +58,8 @@ int	get_texture_pixel(t_texture *texture, int tex_x, int tex_y)
  * Calculates step based on actual wall height to prevent texture squishing.
  *
  * @param game Pointer to game structure
- * @param info Drawing info containing x, draw range, line_height, wall_dir, wall_x
+ * @param info Drawing info containing x, draw range, line_height, wall_dir,
+ * wall_x
  */
 void	draw_textured_wall_slice(t_game *game, t_draw_info info)
 {
