@@ -14,6 +14,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief Counts the number of substrings in a string separated by a delimiter.
+ *
+ * @param s The input string.
+ * @param c The delimiter character.
+ * @return The number of substrings (tokens) found.
+ */
 static size_t	count_substr(const char *s, char c)
 {
 	size_t	count;
@@ -37,6 +44,16 @@ static size_t	count_substr(const char *s, char c)
 	return (count);
 }
 
+/**
+ * @brief Allocates and copies a single substring from a string.
+ *
+ * Advances the input pointer to the character following the substring.
+ *
+ * @param s Pointer to the input string pointer (will be updated).
+ * @param c The delimiter character.
+ * @return A newly allocated substring, or NULL if allocation fails or
+ * no substring found.
+ */
 static char	*allocate_copy_substr(const char **s, char c )
 {
 	const char	*start;
@@ -66,6 +83,11 @@ static char	*allocate_copy_substr(const char **s, char c )
 	return (substr);
 }
 
+/**
+ * @brief Frees a NULL-terminated array of strings.
+ *
+ * @param array The array of strings to free.
+ */
 static void	free_split(char **array)
 {
 	size_t	i;
@@ -81,6 +103,20 @@ static void	free_split(char **array)
 	free(array);
 }
 
+/**
+ * @brief Splits a string into an array of substrings using a delimiter.
+ *
+ * Allocates a new array of strings. Each substring is dynamically allocated
+ * and the array is NULL-terminated.
+ *
+ * @param s The input string.
+ * @param c The delimiter character.
+ * @return A NULL-terminated array of substrings, or NULL on allocation
+ * failure.
+ *
+ * @note The caller is responsible for freeing the returned array using
+ * free_split(). The function does not trim any spaces.
+ */
 char	**ft_split(char const *s, char c)
 {
 	size_t	i;

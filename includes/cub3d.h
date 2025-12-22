@@ -16,19 +16,44 @@
 /*         DEFINE              */
 /* =========================== */
 
-/* error messages */
+/* File validation errors */
 # define ARG_USAGE "Usage: ./cub3D <valid_map.cub>"
-# define NULL_FILENAME "Filename is NULL, please use a valid file"
-# define LENGTH_FILENAME "Filename is too short. Minimum required: x.cub"
-# define EXTENSION_FILENAME "Filename extension is invalid. Expected: .cub"
-# define HIDDEN_FILENAME "Filename can't be a hidden file"
+# define FILENAME_NULL "Filename is NULL, please use a valid file"
+# define FILENAME_LENGHT "Filename is too short. Minimum required: x.cub"
+# define FILENAME_EXTENSION "Filename extension is invalid. Expected: .cub"
+# define FILENAME_HIDDEN "Filename can't be a hidden file"
+
+/* player parsing errors */
+# define PLAYER_ORIENTATION "Invalid player orientation"
+# define PLAYER_NONE "Player not found"
+# define PLAYER_MULTI "Multiple players detected"
+
+/* map parsing errors */
 # define MAP_DIMENSIONS "Invalid map dimensions"
 # define MAP_TOO_LARGE "Map too large (max 500 x 500)"
 # define MAP_CHAR "Invalid character in map"
 # define MAP_ZERO_BORDER "Map not closed: 0 on border"
 # define MAP_ZERO_INVALID "Map not closed: 0 adjacent to invalid cell"
 # define MAP_SPACE "Map not closed: space adjacent to walkable area"
-# define LOAD_MAP "Failed to load map grid"
+# define MAP_LOAD "Failed to load map grid"
+
+/* header parsing errors */
+# define HEADER_DUPLICATE "Duplicate header identifier"
+# define HEADER_MISSING "Missing headers. Expected: 6"
+# define HEADER_TOO_MANY "Too many headers. Expected: 6"
+
+/* Texture-related errors */
+# define TEXTURE_TRIM_FAIL "Texture path trim failed"
+# define TEXTURE_INVALID "Texture file invalid or cannot be opened"
+# define TEXTURE_DUPLICATE "Duplicate texture identifier"
+# define TEXTURE_EMPTY "Texture path missing or empty"
+
+/* RGB/color related errors */
+# define RGB_SPLIT_FAIL "RGB: split failed"
+# define RGB_INVALID_FORMAT "RGB: exactly 3 components ranged 0-255 required"
+# define RGB_TOO_MANY "RGB: Too many values. Expected: 3"
+
+/* MLX errors */
 # define NULL_TGAME "Invalid t_game structure pointer"
 # define MLX_INIT "Initialization of the MLX connection failed"
 # define WIN_INIT "Initialization of the MLX windows failed"
@@ -38,11 +63,18 @@
 # define TEXTURE_DIMENSION "Texture is not 64x64"
 # define TEXTURE_DATA "Failed to retrieved necessary textures data"
 
-/* map constants */
+/* map and header constants */
 # define PLAYER "NSEW"
 # define TILE_CENTER_OFFSET 0.5
 # define MAX_MAP_W 500
 # define MAX_MAP_H 500
+# define RGB_SIZE 3
+# define TEX_SIZE 4
+
+/* table constants */
+# define ADJACENT_DIR_COUNT 4
+# define PLAYER_ORIENT_COUNT 4
+# define FOV_PLANE 0.66
 
 /* game elements */
 # define WINDOWS_X 1920
@@ -69,34 +101,29 @@
 /*        STRUCTURES           */
 /* =========================== */
 
-/* Header type enumeration for parsing .cub files and wall directions */
 typedef enum e_header_type
 {
-	NO = 0,
-	SO = 1,
-	WE = 2,
-	EA = 3,
-	F = 4,
-	C = 5,
-	TEX_SIZE = 4,
-	HEADER_SIZE = 6,
-	RGB_SIZE = 3
+	ID_NONE = -1,
+	ID_NO = 0,
+	ID_SO = 1,
+	ID_WE = 2,
+	ID_EA = 3,
+	ID_FLOOR = 4,
+	ID_CEILING = 5,
+	HEADER_SIZE = 6
 }	t_header_type;
 
 /* map structure - stores parsed .cub file data */
 typedef struct s_map
 {
-	char	**grid;				// 2d array of chars that represents the map layout
-								// ex: '1' = wall, '0' = empty space, 'N' = player, etc.
-	int		width;				// width of the map (max number of columns)
-								// useful for checking map boundaries
-	int		height;				// height of the map (number of lines)
-								// used to loop over the map safely
-	char	*tex_paths[TEX_SIZE];	// array of texture file paths [NO, SO, WE, EA]
-	int		floor_color[RGB_SIZE];	// floor color as [R, G, B] (0-255 per channel)
-	int		ceiling_color[RGB_SIZE];// ceiling color as [R, G, B] (0-255 per channel)
-	bool	id_set[HEADER_SIZE];	// tracks which headers have been parsed
-	int		map_start_line;		// line number where map grid starts in .cub file
+	char	**grid;			// 2d char array representing map layout
+	int		width;			// map width (max number of columns)
+	int		height;			// map height (number of lines)
+	int		floor_color[RGB_SIZE];
+	int		ceiling_color[RGB_SIZE];
+	char	*tex_paths[TEX_SIZE];
+	bool	id_set[HEADER_SIZE];
+	int		map_start_line; //where map lines start
 }	t_map;
 
 /* Tracks which keys are currently pressed */
@@ -166,6 +193,14 @@ typedef struct s_orientation
 	double	plane_y;
 }	t_orientation;
 
+/* header lines look up table */
+typedef struct e_header_entry
+{
+	const char		*key;
+	t_header_type	id;
+	size_t			len;
+}	t_header_entry;
+
 /* Key binding struct for mapping keys to actions */
 typedef struct s_key_binding
 {
@@ -221,11 +256,8 @@ typedef struct s_draw_info
 }	t_draw_info;
 
 /* =========================== */
-/*           EVENT             */
+/*           EVENTS            */
 /* =========================== */
-
-/* cleanup_exit.c */
-void			cleanup_exit(t_game *game);
 
 /* events handlers.c */
 int				handle_keypress(int keycode, void *param);
@@ -269,24 +301,43 @@ int				init_textures(t_game *game);
 /*         PARSING             */
 /* =========================== */
 
+/* check_headers.c */
+int				check_header_count(const char *path);
+
 /* file_validations.c */
 int				validate_argument(char *filename);
+
+/* header_table.c */
+const t_header_entry	*get_header_entry(const char *line);
+
+/* header_utils.c */
+void			next_line(char **line, int fd, int *i);
+bool			line_is_empty(char *line);
+
+/* parse_header.c */
+int				parse_header(const char *path, t_map *map);
+
+/* parse_header_line.c */
+int				parse_header_line(t_map *map, char *line);
 
 /*parse_map.c */
 int				parse_map(const char *path, t_map *map);
 
 /*parse_map_utils.c */
+int				max_int(int a, int b);
 int				open_cub_file(const char *path);
 void			print_map_grid(t_map *map);
-void			free_map(t_map *map);
+void			free_map_grid(t_map *map);
 void			free_partial_grid(t_map *map, int filled_rows);
-void			free_map_copy(char **grid, int map_height);
 
-/* player_setup_utils.c */
-void			print_player_info(t_player *player);
+/* parse_rgb.c */
+int				parse_rgb(const char *value, int rgb_values[RGB_SIZE]);
 
 /* player_setup.c */
 int				init_player(t_game *game);
+
+/* player_setup_utils.c */
+void			print_player_info(t_player *player);
 
 /* validate_map.c */
 int				check_valid_map(t_map *map);
@@ -325,6 +376,10 @@ void			render_frame(t_game *game);
 
 /* ascii art */
 void			print_ascii_art_hello(void);
+
+/* cleanup_exit.c */
+void			free_t_map(t_map *map);
+void			cleanup_exit(t_game *game);
 
 /* print_errors.c */
 void			print_errors(char *p1, char *p2, char *p3);

@@ -62,14 +62,14 @@ static bool	in_bounds(t_map *map, int y, int x)
  */
 static int	check_zero_adjacent(t_map *map, int y, int x)
 {
-	const int	dir_y[4] = {1, -1, 0, 0};
-	const int	dir_x[4] = {0, 0, 1, -1};
+	const int	dir_y[ADJACENT_DIR_COUNT] = {1, -1, 0, 0};
+	const int	dir_x[ADJACENT_DIR_COUNT] = {0, 0, 1, -1};
 	int			i;
 	int			ny;
 	int			nx;
 
 	i = 0;
-	while (i < 4)
+	while (i < ADJACENT_DIR_COUNT)
 	{
 		ny = y + dir_y[i];
 		nx = x + dir_x[i];
@@ -101,14 +101,14 @@ static int	check_zero_adjacent(t_map *map, int y, int x)
  */
 static int	check_space_adjacent(t_map *map, int y, int x)
 {
-	const int	dir_y[4] = {1, -1, 0, 0};
-	const int	dir_x[4] = {0, 0, 1, -1};
+	const int	dir_y[ADJACENT_DIR_COUNT] = {1, -1, 0, 0};
+	const int	dir_x[ADJACENT_DIR_COUNT] = {0, 0, 1, -1};
 	int			i;
 	int			ny;
 	int			nx;
 
 	i = 0;
-	while (i < 4)
+	while (i < ADJACENT_DIR_COUNT)
 	{
 		ny = y + dir_y[i];
 		nx = x + dir_x[i];

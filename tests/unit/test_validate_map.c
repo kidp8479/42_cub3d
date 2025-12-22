@@ -1,3 +1,21 @@
+/**
+ * @file test_validate_map.c
+ * @brief Integration tests for map validation in cub3d.
+ *
+ * This test program validates the behavior of check_valid_map().
+ * It checks:
+ *   - A fully enclosed and valid map
+ *   - Detection of open boundaries (map leaks)
+ *   - Rejection of invalid characters inside the map
+ *
+ * Maps are built manually in memory to isolate map validation logic
+ * from file parsing. Each test prints the map, runs validation, and
+ * uses assertions to verify correct behavior.
+ *
+ * Usage:
+ *   Build: make build TEST=unit/test_validate_map.c
+ *   Run:   ./bin/test_validate_map
+ */
 #include "cub3d.h"
 #include <stdio.h>
 #include <assert.h>
@@ -75,7 +93,7 @@ void	test_map_invalid_chars(void)
 
 	init_test_map(&map);
 	char row0[] = "1111";
-	char row1[] = "1A01"; // invalid char 'A'
+	char row1[] = "1A01";
 	char row2[] = "1111";
 	char *grid[] = {row0, row1, row2};
 	map.grid = grid;
@@ -91,13 +109,13 @@ void	test_map_invalid_chars(void)
 
 int	main(void)
 {
-	printf("===== Testing player setup =====\n");
+	printf(YEL "===== Testing validate map =====\n" RESET);
 	test_map_valid();
 	printf("================================\n");
 	test_map_leak();
 	printf("================================\n");
 	test_map_invalid_chars();
 	printf("================================\n");
-	printf("ALL MAP VALIDATION TESTS PASSED\n");
+	printf(YEL "ALL MAP VALIDATION TESTS PASSED\n" RESET);
 	return (0);
 }

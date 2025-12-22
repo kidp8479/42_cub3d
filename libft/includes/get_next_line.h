@@ -6,7 +6,7 @@
 /*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:14:14 by diade-so          #+#    #+#             */
-/*   Updated: 2025/06/03 22:32:36 by diade-so         ###   ########.fr       */
+/*   Updated: 2025/12/18 16:23:40 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@
 # endif
 
 char	*get_next_line(int fd);
+void	gnl_clear_fd(int fd);
+int		handle_cleanup_mode(int fd, char **buffer);
 
 #endif

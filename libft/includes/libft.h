@@ -6,13 +6,14 @@
 /*   By: pafroidu <pafroidu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:39:49 by diade-so          #+#    #+#             */
-/*   Updated: 2025/09/25 12:56:26 by diade-so         ###   ########.fr       */
+/*   Updated: 2025/12/18 16:04:19 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "get_next_line.h"
 # include <ctype.h>
 # include <fcntl.h>
 # include <limits.h>

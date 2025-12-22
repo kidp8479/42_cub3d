@@ -62,10 +62,10 @@ int	get_wall_direction(t_ray *ray)
 	if (ray->side == VERTICAL_WALL)
 	{
 		if (ray->step_x > 0)
-			return (EA);
-		return (WE);
+			return (ID_EA);
+		return (ID_WE);
 	}
 	if (ray->step_y > 0)
-		return (SO);
-	return (NO);
+		return (ID_SO);
+	return (ID_NO);
 }

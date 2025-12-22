@@ -27,17 +27,22 @@ INC_DIR = -Iincludes -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
 
 # === source files ===
 SRC =	src/main.c \
-		src/events/cleanup_exit.c \
 		src/events/events_handler.c \
 		src/events/game_loop.c \
 		src/events/hooks.c \
-		src/events/player_actions_rotate.c \
-		src/events/player_actions_move.c \
 		src/events/mouse_handler.c \
+		src/events/player_actions_move.c \
+		src/events/player_actions_rotate.c \
 		src/init/init_data.c \
 		src/init/init_mlx.c \
 		src/init/init_textures.c \
+		src/parsing/check_headers.c \
 		src/parsing/file_validations.c \
+		src/parsing/header_table.c \
+		src/parsing/header_utils.c \
+		src/parsing/parse_rgb.c \
+		src/parsing/parse_header.c \
+		src/parsing/parse_header_line.c \
 		src/parsing/parse_map.c \
 		src/parsing/parse_map_utils.c \
 		src/render/draw_pixels.c \
@@ -49,6 +54,7 @@ SRC =	src/main.c \
 		src/parsing/player_setup_utils.c \
 		src/parsing/validate_map.c \
 		src/utils/ascii_art.c \
+		src/utils/cleanup_exit.c \
 		src/utils/print_errors.c \
 		src/utils/rgb_tab_to_int.c \
 
