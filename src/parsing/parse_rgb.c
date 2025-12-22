@@ -1,5 +1,15 @@
 #include "cub3d.h"
 
+/**
+ * @brief Parses and validates a single RGB component
+ *
+ * Converts a string to an integer and verifies it's in valid range [0-255].
+ * Uses ft_safe_atoi to ensure the string represents a valid integer.
+ *
+ * @param str String representation of the RGB value
+ * @param value Pointer to store the parsed integer value
+ * @return EXIT_SUCCESS if valid, EXIT_FAILURE otherwise
+ */
 static int	parse_rgb_component(const char *str, int *value)
 {
 	int	rgb_value;
@@ -12,6 +22,19 @@ static int	parse_rgb_component(const char *str, int *value)
 	return (EXIT_SUCCESS);
 }
 
+/**
+ * @brief Parses an RGB color string in format "R,G,B"
+ *
+ * Splits the input string by commas and validates each component:
+ *   - Must have exactly 3 components
+ *   - Each component must be an integer in range [0-255]
+ *
+ * Example valid input: "220,100,0"
+ *
+ * @param value Input string containing comma-separated RGB values
+ * @param rgb_values Output array to store the 3 parsed integers
+ * @return EXIT_SUCCESS if parsing succeeds, EXIT_FAILURE on error
+ */
 int	parse_rgb(const char *value, int rgb_values[RGB_SIZE])
 {
 	char	**rgb_strs;
