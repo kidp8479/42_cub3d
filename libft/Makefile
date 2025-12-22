@@ -6,7 +6,7 @@
 #    By: pafroidu <pafroidu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/15 15:16:47 by diade-so          #+#    #+#              #
-#    Updated: 2025/09/25 12:56:51 by diade-so         ###   ########.fr        #
+#    Updated: 2025/12/18 16:02:53 by diade-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,8 @@ SRC_STRING = \
 	src/string/ft_substr.c \
 
 SRC_READ = \
-	src/read/get_next_line.c
+	src/read/get_next_line.c \
+	src/read/get_next_line_utils.c
 
 SRC = $(SRC_CHAR) $(SRC_CONV) $(SRC_IO) $(SRC_LIST) $(SRC_MEMORY) $(SRC_PRINTF)\
 	$(SRC_STRING) $(SRC_READ)

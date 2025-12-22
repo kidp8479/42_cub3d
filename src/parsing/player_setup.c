@@ -38,15 +38,17 @@ static bool	is_player(char c)
  *
  * @return Pointer to a static array of 4 t_orientation elements.
  */
-static const t_orientation	*get_orientation(void)
+static const t_orientation	*get_orientation(size_t *count)
 {
-	static const t_orientation	orient[4] = {
-	{'N', 0.0, -1.0, 0.66, 0.0},
-	{'S', 0.0, 1.0, -0.66, 0.0},
-	{'E', 1.0, 0.0, 0.0, 0.66},
-	{'W', -1.0, 0.0, 0.0, -0.66},
+	static const t_orientation	orient[PLAYER_ORIENT_COUNT] = {
+	{'N', 0.0, -1.0, FOV_PLANE, 0.0},
+	{'S', 0.0, 1.0, -FOV_PLANE, 0.0},
+	{'E', 1.0, 0.0, 0.0, FOV_PLANE},
+	{'W', -1.0, 0.0, 0.0, -FOV_PLANE},
 	};
 
+	if (count)
+		*count = sizeof(orient) / sizeof(orient[0]);
 	return (orient);
 }
 
@@ -66,16 +68,17 @@ static const t_orientation	*get_orientation(void)
  */
 static void	set_player_position(t_game *game, int y, int x)
 {
-	int					i;
+	size_t				i;
 	char				c;
+	size_t				count;
 	const t_orientation	*orient;
 
 	c = game->map.grid[y][x];
 	game->player.pos_x = x + TILE_CENTER_OFFSET;
 	game->player.pos_y = y + TILE_CENTER_OFFSET;
-	orient = get_orientation();
+	orient = get_orientation(&count);
 	i = 0;
-	while (i < 4)
+	while (i < count)
 	{
 		if (orient[i].c == c)
 		{
@@ -87,7 +90,7 @@ static void	set_player_position(t_game *game, int y, int x)
 		}
 		i++;
 	}
-	print_errors("Invalid player orientation", NULL, NULL);
+	print_errors(PLAYER_ORIENTATION, NULL, NULL);
 }
 
 /**
@@ -114,7 +117,7 @@ static int	set_player(t_game *game, int *player_found, int y, int x)
 	{
 		if (*player_found)
 		{
-			print_errors("Multiple players detected", NULL, NULL);
+			print_errors(PLAYER_MULTI, NULL, NULL);
 			return (EXIT_FAILURE);
 		}
 		*player_found = 1;
@@ -157,7 +160,7 @@ int	init_player(t_game *game)
 	}
 	if (!player_found)
 	{
-		print_errors("Player not found", NULL, NULL);
+		print_errors(PLAYER_NONE, NULL, NULL);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
