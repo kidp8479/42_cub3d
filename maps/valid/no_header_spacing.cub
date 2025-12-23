@@ -1,9 +1,9 @@
-NO ./assets/textures/NO.xpm
-SO ./assets/textures/SO.xpm
-WE ./assets/textures/WE.xpm
-EA ./assets/textures/EA.xpm
-F 220,100,0
-C 225,30,0
+NO assets/textures/cave/NO.xpm
+SO assets/textures/cave/SO.xpm
+WE assets/textures/cave/WE.xpm
+EA assets/textures/cave/EA.xpm
+C 128, 195, 237
+F 169, 184, 194
 111
 101
 1N1

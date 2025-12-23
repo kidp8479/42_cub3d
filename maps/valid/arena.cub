@@ -1,3 +1,11 @@
+NO assets/textures/bricks/NO.xpm
+SO assets/textures/bricks/SO.xpm
+WE assets/textures/bricks/WE.xpm
+EA assets/textures/bricks/EA.xpm
+
+F 36, 26, 12
+C 2, 8, 18
+
 11111111111111111111111111111111111111111
 10000000000000000000000000000000000000001
 10111111000011111100001111110000111111101
