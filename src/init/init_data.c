@@ -2,7 +2,7 @@
 
 /**
  * @brief Initializes the game data structure to a clean state.
- * 
+ *
  * This function zeroes out the entire t_game structure, including
  * all nested structs such as t_map and t_player.
  *
@@ -14,9 +14,7 @@ void	init_data(t_game *game)
 {
 	if (!game)
 		return ;
-	// Zero out entire struct including any nested structs and its fields
 	ft_bzero(game, sizeof(t_game));
-	// Initialize mouse position to center of window
 	game->last_mouse_x = WINDOWS_X / 2;
 	game->last_mouse_y = WINDOWS_Y / 2;
 }

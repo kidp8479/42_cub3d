@@ -49,24 +49,24 @@ static bool	is_valid_filename(const char *filename)
 
 	if (!filename)
 	{
-		print_errors(NULL_FILENAME, NULL, NULL);
+		print_errors(FILENAME_NULL, NULL, NULL);
 		return (false);
 	}
 	basename = get_file_basename(filename);
 	basename_len = ft_strlen(basename);
 	if (basename[0] == '.')
 	{
-		print_errors(HIDDEN_FILENAME, NULL, NULL);
+		print_errors(FILENAME_HIDDEN, NULL, NULL);
 		return (false);
 	}
 	if (basename_len < 5)
 	{
-		print_errors(LENGTH_FILENAME, NULL, NULL);
+		print_errors(FILENAME_LENGHT, NULL, NULL);
 		return (false);
 	}
 	if (ft_strcmp(&basename[basename_len - 4], ".cub") == 0)
 		return (true);
-	print_errors(EXTENSION_FILENAME, NULL, NULL);
+	print_errors(FILENAME_EXTENSION, NULL, NULL);
 	return (false);
 }
 

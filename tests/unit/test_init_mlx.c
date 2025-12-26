@@ -15,7 +15,7 @@
  * - no clean up is done in this test, it's not making much sense without
  * having the events set up
  */
-int	main(void)
+/* int	main(void)
 {
 	t_game	game;
 	int		i;		// iterator rows
@@ -49,4 +49,4 @@ int	main(void)
 	mlx_loop(game.mlx);
 
 	return (0);
-}
+} */

@@ -1,5 +1,13 @@
 #include "cub3d.h"
 
+/**
+ * @brief Returns a static lookup table of all valid header identifiers
+ *
+ * The table maps header keys (NO, SO, WE, EA, F, C) to their
+ * corresponding t_header_type enum values and key lengths.
+ *
+ * @return Pointer to static array of t_header_entry structures
+ */
 static const t_header_entry	*get_header_table(void)
 {
 	static const t_header_entry	header[] = {
@@ -14,6 +22,17 @@ static const t_header_entry	*get_header_table(void)
 	return (header);
 }
 
+/**
+ * @brief Matches a line against known header identifiers
+ *
+ * Searches the header lookup table to find a matching entry for
+ * the given line. A match occurs when:
+ *   - The line starts with a known header key (NO, SO, WE, EA, F, C)
+ *   - The character immediately after the key is whitespace
+ *
+ * @param line Input line to match against header table
+ * @return Pointer to matching t_header_entry, or NULL if no match found
+ */
 const t_header_entry	*get_header_entry(const char *line)
 {
 	size_t					i;

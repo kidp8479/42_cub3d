@@ -1,9 +1,9 @@
-NO ./assets/textures/NO.xpm
-SO ./assets/textures/SO.xpm
-WE ./assets/textures/WE.xpm
-EA ./assets/textures/EA.xpm
-F 220,100,0
-C 225,30,0
+NO assets/textures/sky/NO.xpm
+SO assets/textures/sky/SO.xpm
+WE assets/textures/sky/WE.xpm
+EA assets/textures/sky/EA.xpm
+F 1, 37, 38
+C 3, 2, 48
 111
 101
 1N1

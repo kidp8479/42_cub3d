@@ -1,11 +1,12 @@
 #include "cub3d.h"
 
 /**
- * @brief Handles mouse movement for horizontal camera rotation (stub)
+ * @brief Handles mouse movement for FPS-style camera rotation
  *
- * Detects horizontal mouse movement and logs rotation direction.
- * Only handles left/right rotation (yaw), not up/down (pitch).
- * Currently just logs debug messages, actual rotation logic to be implemented.
+ * Implements infinite rotation by recentering the cursor after each movement.
+ * This prevents the cursor from hitting screen edges and allows continuous
+ * rotation.
+ * Only handles horizontal rotation (yaw), not vertical (pitch).
  *
  * @param x Current mouse X position in window coordinates
  * @param y Current mouse Y position in window coordinates
@@ -14,25 +15,18 @@
  */
 int	handle_mouse_move(int x, int y, void *param)
 {
-	static int	frame_count_left = 0;
-	static int	frame_count_right = 0;
-	t_game		*game;
-	int			delta_x;
+	t_game	*game;
+	int		delta_x;
 
 	game = (t_game *)param;
 	delta_x = x - game->last_mouse_x;
-	if (delta_x > 0)
+	if (delta_x != 0)
 	{
-		frame_count_right++;
-		if (frame_count_right % 60 == 0)
-			printf("DEBUG: Mouse rotating RIGHT (frame %d)\n",
-				frame_count_right);
-	}
-	else if (delta_x < 0)
-	{
-		frame_count_left++;
-		if (frame_count_left % 60 == 0)
-			printf("DEBUG: Mouse rotating LEFT (frame %d)\n", frame_count_left);
+		apply_camera_rotation(game, delta_x * MOUSE_SENSITIVITY);
+		mlx_mouse_move(game->mlx, game->win, WINDOWS_X / 2, WINDOWS_Y / 2);
+		game->last_mouse_x = WINDOWS_X / 2;
+		game->last_mouse_y = WINDOWS_Y / 2;
+		return (EXIT_SUCCESS);
 	}
 	game->last_mouse_x = x;
 	game->last_mouse_y = y;

@@ -1,10 +1,10 @@
-NO ./assets/textures/NO.xpm
-SO ./assets/textures/SO.xpm
-WE ./assets/textures/WE.xpm
-EA ./assets/textures/EA.xpm
+NO ./assets/textures/colors/NO.xpm
+SO ./assets/textures/colors/SO.xpm
+WE ./assets/textures/colors/WE.xpm
+EA ./assets/textures/colors/EA.xpm
 
 F 220,100,0
-C 225,30,0
+C 227, 55, 250
 
 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 1000000000000000000100000000000000001000000000000000001000000000000000001000000000000000001000000001

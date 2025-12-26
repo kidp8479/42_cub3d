@@ -15,7 +15,7 @@ int	max_int(int a, int b)
 
 /**
  * @brief Opens a .cub file for reading.
- * 
+ *
  * Wrapper around open()
  *
  * @param path Path to the .cub file.
@@ -33,12 +33,12 @@ int	open_cub_file(const char *path)
 
 /**
  * @brief Prints the map grid to stdout for debugging.
- * 
+ *
  * Spaces in the map are displayed as '.' to make them visible.
  * This includes both padding added by the parser and any spaces
  * that were already present in the map. It does not distinguish
  * between the two.
- * 
+ *
  * Does not modify the map.
  *
  * @param map Pointer to the t_map structure containing the grid.
@@ -51,7 +51,7 @@ void	print_map_grid(t_map *map)
 
 	if (!map || !map->grid)
 		return ;
-	printf("Map dimensions: %d x %d\n", map->width, map->height);
+	printf(MAG "Map dimensions: %d x %d\n" RESET, map->width, map->height);
 	y = 0;
 	while (y < map->height)
 	{
@@ -72,7 +72,7 @@ void	print_map_grid(t_map *map)
 
 /**
  * @brief Frees all memory allocated for the map grid.
- * 
+ *
  * Frees each row of map->grid, then the grid itself.
  * Resets map width and height to 0. Safe to call on NULL pointers.
  *

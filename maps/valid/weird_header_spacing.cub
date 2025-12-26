@@ -1,20 +1,20 @@
 
 
 
-NO ./assets/textures/NO.xpm			
-SO ./assets/textures/SO.xpm
+NO ./assets/textures/dino_weird/NO.xpm
+SO ./assets/textures/dino_weird/SO.xpm
 
 
 
-WE        ./assets/textures/WE.xpm
+WE        ./assets/textures/dino_weird/WE.xpm
 
-        EA ./assets/textures/EA.xpm
+        EA ./assets/textures/dino_weird/EA.xpm
 
-F 220,100,0
+F 0, 255, 17
 
 
 
-C 225,30       ,0
+C 255, 225, 0
 
 
 
@@ -27,8 +27,8 @@ C 225,30       ,0
  100101
  101001
  110001
- 1111111111111111111111111
-1N0001000000100000000011
+ 1100011111111111111111111
+1N0000000000100000000011
 1011101110111011101111011
 1000100000100001000100011
 1110111011101110111011011

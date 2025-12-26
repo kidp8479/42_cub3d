@@ -1,0 +1,18 @@
+
+F 2, 4, 13
+C 150, 6, 6
+
+NO assets/textures/twin_peaks/NO.xpm
+SO assets/textures/twin_peaks/SO.xpm
+WE assets/textures/twin_peaks/WE.xpm
+EA assets/textures/twin_peaks/EA.xpm
+
+                      111111
+                 111111000001
+            111111000000000001
+       111111000000000000000001
+  111111000000000000N000000001
+       111111000000000000000001
+            111111000000000001
+                 111111000001
+                      111111
