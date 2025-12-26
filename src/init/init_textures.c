@@ -59,8 +59,10 @@ int	init_textures(t_game *game)
 	{
 		if (load_texture(game, &game->textures[i], game->map.tex_paths[i])
 			!= EXIT_SUCCESS)
+		{
 			cleanup_textures(game);
-		return (EXIT_FAILURE);
+			return (EXIT_FAILURE);
+		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
