@@ -13,21 +13,29 @@
 #include "cub3d.h"
 
 /**
- * @brief Calculates microseconds elapsed since last frame
+ * @brief Checks if enough time has passed for next frame (60 FPS cap)
  *
- * @param last Pointer to last frame's timestamp
- * @return Microseconds elapsed
+ * Uses static timeval to track last frame time. On first call (tv_sec == 0),
+ * always allows rendering. Subsequently enforces 16.666ms minimum between
+ * frames.
+ *
+ * @return 1 if should render, 0 if should skip
  */
-static long	get_elapsed_time(struct timeval *last)
+static int	should_render_frame(void)
 {
-	struct timeval	current;
-	long			elapsed;
+	static struct timeval	last_frame;
+	struct timeval			current;
+	long					elapsed;
 
 	gettimeofday(&current, NULL);
-	elapsed = (current.tv_sec - last->tv_sec) * 1000000
-		+ (current.tv_usec - last->tv_usec);
-	*last = current;
-	return (elapsed);
+	elapsed = (current.tv_sec - last_frame.tv_sec) * 1000000
+		+ (current.tv_usec - last_frame.tv_usec);
+	if (elapsed >= 16666 || last_frame.tv_sec == 0)
+	{
+		last_frame = current;
+		return (1);
+	}
+	return (0);
 }
 
 /**
@@ -44,20 +52,13 @@ static long	get_elapsed_time(struct timeval *last)
  */
 int	game_loop(void *param)
 {
-	t_game					*game;
-	t_key_binding			*bindings;
-	int						i;
-	static struct timeval	last_frame;
-	static int				initialized;
+	t_game			*game;
+	t_key_binding	*bindings;
+	int				i;
 
-	game = (t_game *)param;
-	if (!initialized)
-	{
-		gettimeofday(&last_frame, NULL);
-		initialized = 1;
-	}
-	if (get_elapsed_time(&last_frame) < 16666)
+	if (!should_render_frame())
 		return (EXIT_SUCCESS);
+	game = (t_game *)param;
 	bindings = get_key_bindings(game);
 	i = 0;
 	while (bindings[i].action)
