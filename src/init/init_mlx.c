@@ -99,7 +99,7 @@ static int	init_game_image_buffer(t_game *game)
  * @param game Pointer to main game structure
  * @return EXIT_SUCCESS if all inits succeed, EXIT_FAILURE otherwise
  */
-int	init_game_data(t_game *game)
+int	init_graphics(t_game *game)
 {
 	if (!game)
 	{

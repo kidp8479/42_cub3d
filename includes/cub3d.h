@@ -276,11 +276,10 @@ void					strafe_right(t_game *game);
 /* =========================== */
 
 /* init_data.c */
-void					init_data(t_game *game);
-int						load_and_validate_map(char *path, t_game *game);
+void					init_t_game(t_game *game);
 
 /* init_mlx.c */
-int						init_game_data(t_game *game);
+int						init_graphics(t_game *game);
 
 /* init_textures.c */
 int						init_textures(t_game *game);
@@ -301,6 +300,9 @@ const t_header_entry	*get_header_entry(const char *line);
 /* header_utils.c */
 void					next_line(char **line, int fd, int *i);
 bool					line_is_empty(char *line);
+
+/* parse_and_validate_cub */
+int						parse_and_validate_cub(char *path, t_game *game);
 
 /* parse_header.c */
 int						parse_header(const char *path, t_map *map);

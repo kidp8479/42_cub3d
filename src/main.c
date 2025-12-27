@@ -1,19 +1,14 @@
 #include "cub3d.h"
 
 /**
- * @brief Entry point of the Cub3D program
+ * @brief Program entry point for Cub3D
  *
- * This function orchestrates the entire program execution:
- *   1. Validates command-line arguments (expects exactly one .cub file)
- *   2. Loads, parses, and validates the map file
- *   3. Initializes MLX connection, window, and image buffer
- *   4. Loads wall textures from parsed paths
- *   5. Sets up event hooks for keyboard and mouse input
- *   6. Starts the main game loop
- *   7. Cleans up resources and exits on completion
+ * Initializes game state, parses and validates the .cub file,
+ * sets up graphics, loads textures, installs event hooks,
+ * and enters the main rendering loop.
  *
- * @param argc Number of command-line arguments
- * @param argv Array of command-line argument strings
+ * @param argc Argument count
+ * @param argv Argument vector
  * @return EXIT_SUCCESS on normal exit, EXIT_FAILURE on error
  */
 int	main(int argc, char **argv)
@@ -25,15 +20,15 @@ int	main(int argc, char **argv)
 		print_errors(ARG_USAGE, NULL, NULL);
 		return (EXIT_FAILURE);
 	}
-	if (load_and_validate_map(argv[1], &game) != EXIT_SUCCESS)
+	init_t_game(&game);
+	if (validate_argument(argv[1]) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
-	if (init_game_data(&game) != EXIT_SUCCESS)
+	if (parse_and_validate_cub(argv[1], &game) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	if (init_graphics(&game) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	if (init_textures(&game) != EXIT_SUCCESS)
-	{
-		cleanup_exit(&game);
 		return (EXIT_FAILURE);
-	}
 	print_ascii_art_hello();
 	print_map_grid(&game.map);
 	setup_hooks(&game);
