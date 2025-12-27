@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dda.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pafroidu <pafroidu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/27 14:10:14 by diade-so          #+#    #+#             */
+/*   Updated: 2025/12/27 18:13:39 by pafroidu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /**
@@ -122,20 +134,15 @@ t_ray_result	cast_ray(t_game *game, double ray_dir_x, double ray_dir_y)
 	t_ray			ray;
 	t_ray_result	result;
 
-	// initialize ray direction and map position
 	ray.dir_x = ray_dir_x;
 	ray.dir_y = ray_dir_y;
 	ray.map_x = (int)game->player.pos_x;
 	ray.map_y = (int)game->player.pos_y;
-	// calculate distances
 	calculate_delta_dist(&ray);
 	calculate_side_dist(&ray, game->player.pos_x, game->player.pos_y);
-	// perform DDA to find wall
 	perform_dda(game, &ray);
-	// determine wall direction and calculate distances
 	result.wall_dir = get_wall_direction(&ray);
 	result.wall_dist = calculate_wall_distance(&ray);
-	// calculate exact hit position on wall for texture mapping
 	result.wall_x = calculate_wall_x(&ray, game->player.pos_x,
 			game->player.pos_y, result.wall_dist);
 	return (result);

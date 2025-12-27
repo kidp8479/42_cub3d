@@ -40,6 +40,7 @@ SRC =	src/main.c \
 		src/parsing/file_validations.c \
 		src/parsing/header_table.c \
 		src/parsing/header_utils.c \
+		src/parsing/parse_and_validate_cub.c \
 		src/parsing/parse_rgb.c \
 		src/parsing/parse_header.c \
 		src/parsing/parse_header_line.c \

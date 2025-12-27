@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/27 14:03:27 by diade-so          #+#    #+#             */
+/*   Updated: 2025/12/27 20:12:57 by diade-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /**
@@ -52,6 +64,9 @@ static bool	in_bounds(t_map *map, int y, int x)
 /**
  * @brief Check that a '0' cell is only adjacent to '0' or '1'.
  *
+ * Checks all 4 orthogonal neighbors (up, down, left, right) of a '0' cell
+ * to ensure the map is properly enclosed. A '0' cell next to a space or
+ * out-of-bounds position indicates an invalid/open map.
  * ny and nx stand for the neighboring cell coordinates. The dir_y and dir_x
  * tables define the relative positions (up, down, left, right) to check.
  *
@@ -91,6 +106,8 @@ static int	check_zero_adjacent(t_map *map, int y, int x)
 /**
  * @brief Check that a space cell is not adjacent to a '0' cell.
  *
+ * Checks all 4 orthogonal neighbors (up, down, left, right) of a space
+ * cell. Spaces adjacent to '0' cells indicate holes in the map enclosure.
  * ny and nx are the neighboring cell coordinates. dir_y and dir_x define
  * relative positions (up, down, left, right) to inspect.
  *

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cleanup_exit.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pafroidu <pafroidu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/27 18:13:07 by pafroidu          #+#    #+#             */
+/*   Updated: 2025/12/27 20:17:28 by diade-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /**
@@ -5,6 +17,7 @@
   *
   * Destroys MLX image objects for all 4 wall textures.
   * Checks for NULL before destroying to handle partial initialization.
+  * Safe to call even if textures were never loaded.
   *
   * @param game Pointer to game structure
 */
@@ -63,7 +76,8 @@ void	free_t_map(t_map *map)
   *
   * Destroys MLX resources (image, window, display) and frees game data.
   * Called when user presses ESC or clicks window close button.
-  * Order of operations matters
+  * Order of operations matters: textures/image must be destroyed before
+ * display, and display before freeing MLX pointer.
   *
   * @param game Pointer to game structure
 */

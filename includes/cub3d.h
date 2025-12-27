@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pafroidu <pafroidu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/27 13:52:52 by diade-so          #+#    #+#             */
+/*   Updated: 2025/12/27 18:57:59 by diade-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -30,7 +42,7 @@
 
 /* map parsing errors */
 # define MAP_DIMENSIONS "Invalid map dimensions"
-# define MAP_TOO_LARGE "Map too large (max 500 x 500)"
+# define MAP_TOO_LARGE "Map too large (max 100 x 100)"
 # define MAP_CHAR "Invalid character in map"
 # define MAP_ZERO_BORDER "Map not closed: 0 on border"
 # define MAP_ZERO_INVALID "Map not closed: 0 adjacent to invalid cell"
@@ -66,8 +78,8 @@
 /* map and header constants */
 # define PLAYER "NSEW"
 # define TILE_CENTER_OFFSET 0.5
-# define MAX_MAP_W 500
-# define MAX_MAP_H 500
+# define MAX_MAP_W 100
+# define MAX_MAP_H 100
 # define RGB_SIZE 3
 # define TEX_SIZE 4
 
@@ -88,12 +100,13 @@
 # define TEXTURE_FALLBACK_COLOR 0x000000
 # define MOVE_SPEED 0.05
 # define ROT_SPEED 0.05
-# define MOUSE_SENSITIVITY 0.00005
+# define MOUSE_SENSITIVITY 0.002
 
 /* =========================== */
 /*        STRUCTURES           */
 /* =========================== */
 
+/** Enum of valid .cub file header identifiers (textures and colors). */
 typedef enum e_header_type
 {
 	ID_NONE = -1,
@@ -256,12 +269,12 @@ t_key_binding			*get_key_bindings(t_game *game);
 
 /* mouse_handler.c */
 int						handle_mouse_move(int x, int y, void *param);
-void					apply_camera_rotation(t_game *game, double angle);
 
 /* hooks.c */
 void					setup_hooks(t_game *game);
 
 /* player_actions_rotate.c */
+void					apply_camera_rotation(t_game *game, double angle);
 void					rotate_left(t_game *game);
 void					rotate_right(t_game *game);
 
@@ -276,11 +289,10 @@ void					strafe_right(t_game *game);
 /* =========================== */
 
 /* init_data.c */
-void					init_data(t_game *game);
-int						load_and_validate_map(char *path, t_game *game);
+void					init_t_game(t_game *game);
 
 /* init_mlx.c */
-int						init_game_data(t_game *game);
+int						init_graphics(t_game *game);
 
 /* init_textures.c */
 int						init_textures(t_game *game);
@@ -301,6 +313,9 @@ const t_header_entry	*get_header_entry(const char *line);
 /* header_utils.c */
 void					next_line(char **line, int fd, int *i);
 bool					line_is_empty(char *line);
+
+/* parse_and_validate_cub */
+int						parse_and_validate_cub(char *path, t_game *game);
 
 /* parse_header.c */
 int						parse_header(const char *path, t_map *map);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_header.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/27 14:07:06 by diade-so          #+#    #+#             */
+/*   Updated: 2025/12/27 18:30:39 by diade-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /**
@@ -71,7 +83,6 @@ static bool	set_map_start_line(t_map *map, char **line, int fd, int *i)
 	if (!skip_empty_lines(line, fd, i))
 		return (false);
 	map->map_start_line = (*i);
-	printf("map start line: %d\n", map->map_start_line);
 	return (true);
 }
 

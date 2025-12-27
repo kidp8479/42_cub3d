@@ -4,7 +4,7 @@ TEST_BIN="./cub3D"
 MAP_DIR="maps/invalid"
 
 echo "=== Running tests for invalid maps .cub maps ==="
-for map in "$MAP_DIR"/*.cub; do
+for map in "$MAP_DIR"/*; do
 	echo
 	echo -e "\033[36m=== Testing: $map ===\033[0m"
 

@@ -1,7 +1,7 @@
-NO ./assets/textures/NO.xpm
-SO ./assets/textures/SO.xpm
-WE ./assets/textures/WE.xpm
-EA ./assets/textures/EA.xpm
+NO ./assets/textures/colors/NO.xpm
+SO ./assets/textures/colors/SO.xpm
+WE ./assets/textures/colors/WE.xpm
+EA ./assets/textures/colors/EA.xpm
 
 F 220,100
 C 225,30,0

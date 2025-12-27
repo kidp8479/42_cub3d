@@ -1,20 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/27 13:56:37 by diade-so          #+#    #+#             */
+/*   Updated: 2025/12/27 20:19:37 by diade-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /**
- * @brief Entry point of the Cub3D program
+ * @brief Program entry point for Cub3D
  *
- * This function orchestrates the entire program execution:
- *   1. Validates command-line arguments (expects exactly one .cub file)
- *   2. Loads, parses, and validates the map file
- *   3. Initializes MLX connection, window, and image buffer
- *   4. Loads wall textures from parsed paths
- *   5. Sets up event hooks for keyboard and mouse input
- *   6. Starts the main game loop
- *   7. Cleans up resources and exits on completion
+ * Orchestrates the complete initialization sequence:
+ *   1. Validates command-line arguments
+ *   2. Initializes game state structure
+ *   3. Parses and validates the .cub file
+ *   4. Sets up graphics (MLX connection, window, image buffer)
+ *   5. Loads wall textures
+ *   6. Installs event hooks for keyboard/mouse input
+ *   7. Enters the main rendering loop
  *
- * @param argc Number of command-line arguments
- * @param argv Array of command-line argument strings
+ * Exits immediately if any initialization step fails.
+ *
+ * @param argc Argument count (must be 2)
+ * @param argv Argument vector (argv[1] = path to .cub file)
  * @return EXIT_SUCCESS on normal exit, EXIT_FAILURE on error
+ *
+ * @note The cleanup_exit() call at the end is never reached during normal
+ *       execution, as mlx_loop() runs indefinitely until the window is closed
  */
 int	main(int argc, char **argv)
 {
@@ -25,15 +42,15 @@ int	main(int argc, char **argv)
 		print_errors(ARG_USAGE, NULL, NULL);
 		return (EXIT_FAILURE);
 	}
-	if (load_and_validate_map(argv[1], &game) != EXIT_SUCCESS)
+	init_t_game(&game);
+	if (validate_argument(argv[1]) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
-	if (init_game_data(&game) != EXIT_SUCCESS)
+	if (parse_and_validate_cub(argv[1], &game) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	if (init_graphics(&game) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	if (init_textures(&game) != EXIT_SUCCESS)
-	{
-		cleanup_exit(&game);
 		return (EXIT_FAILURE);
-	}
 	print_ascii_art_hello();
 	print_map_grid(&game.map);
 	setup_hooks(&game);
