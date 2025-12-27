@@ -6,7 +6,7 @@
 /*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:53:40 by diade-so          #+#    #+#             */
-/*   Updated: 2025/12/27 13:54:03 by diade-so         ###   ########.fr       */
+/*   Updated: 2025/12/27 19:54:45 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_key_binding	*get_key_bindings(t_game *game)
  * @brief Handles key press events using function pointers
  *
  * Iterates through key bindings and sets the corresponding flag to true
- * when a registered key is pressed.
+ * when a registered key is pressed. ESC key triggers immediate exit.
  *
  * @param keycode X11 keycode of the pressed key
  * @param param Pointer to game structure (void* from MLX, must cast)

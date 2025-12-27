@@ -6,7 +6,7 @@
 /*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:07:44 by diade-so          #+#    #+#             */
-/*   Updated: 2025/12/27 14:07:46 by diade-so         ###   ########.fr       */
+/*   Updated: 2025/12/27 20:03:54 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static bool	is_player(char c)
  * which is the value used in the original Wolfenstein 3D formulation
  * and is standard in basic raycasting engines.
  *
+ * @param count Pointer to store the number of orientations
+ * (optional, can be NULL)
  * @return Pointer to a static array of 4 t_orientation elements.
  */
 static const t_orientation	*get_orientation(size_t *count)

@@ -6,7 +6,7 @@
 /*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:56:50 by diade-so          #+#    #+#             */
-/*   Updated: 2025/12/27 13:56:52 by diade-so         ###   ########.fr       */
+/*   Updated: 2025/12/27 19:56:34 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  *
  * This function zeroes out the entire t_game structure, including
  * all nested structs such as t_map and t_player.
+ * Centers the mouse tracking position to screen center.
  *
  * @param game Pointer to the t_game structure to initialize.
  *

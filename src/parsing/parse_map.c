@@ -6,7 +6,7 @@
 /*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:06:47 by diade-so          #+#    #+#             */
-/*   Updated: 2025/12/27 14:06:50 by diade-so         ###   ########.fr       */
+/*   Updated: 2025/12/27 20:00:42 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ static int	load_map_grid(const char *path, t_map *map)
  *
  * @param path Path to the .cub file.
  * @param map Pointer to t_map structure to fill.
- * @return 0 on success, 1 on failure.
+ * @return EXIT_SUCCESS on success, EXIT_FAILURE on failure.
  *
  * @note **Currently, no validation of the map contents is performed.**
  *       Only the map dimensions and grid are loaded and padded.

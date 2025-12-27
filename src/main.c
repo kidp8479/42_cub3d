@@ -6,7 +6,7 @@
 /*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:56:37 by diade-so          #+#    #+#             */
-/*   Updated: 2025/12/27 14:09:09 by diade-so         ###   ########.fr       */
+/*   Updated: 2025/12/27 20:19:37 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,23 @@
 /**
  * @brief Program entry point for Cub3D
  *
- * Initializes game state, parses and validates the .cub file,
- * sets up graphics, loads textures, installs event hooks,
- * and enters the main rendering loop.
+ * Orchestrates the complete initialization sequence:
+ *   1. Validates command-line arguments
+ *   2. Initializes game state structure
+ *   3. Parses and validates the .cub file
+ *   4. Sets up graphics (MLX connection, window, image buffer)
+ *   5. Loads wall textures
+ *   6. Installs event hooks for keyboard/mouse input
+ *   7. Enters the main rendering loop
  *
- * @param argc Argument count
- * @param argv Argument vector
+ * Exits immediately if any initialization step fails.
+ *
+ * @param argc Argument count (must be 2)
+ * @param argv Argument vector (argv[1] = path to .cub file)
  * @return EXIT_SUCCESS on normal exit, EXIT_FAILURE on error
+ *
+ * @note The cleanup_exit() call at the end is never reached during normal
+ *       execution, as mlx_loop() runs indefinitely until the window is closed
  */
 int	main(int argc, char **argv)
 {

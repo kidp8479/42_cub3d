@@ -6,7 +6,7 @@
 /*   By: pafroidu <pafroidu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:54:27 by diade-so          #+#    #+#             */
-/*   Updated: 2025/12/27 18:03:45 by pafroidu         ###   ########.fr       */
+/*   Updated: 2025/12/27 19:51:36 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
  *
  * Executes the main rendering pipeline:
  * 1. Processes input - checks which keys are pressed and executes actions
- * 2. Clears the window - prevents trailing artifacts from previous frame
- * 3. Renders the scene - casts WINDOWS_X rays (one per screen column)
- * 4. Displays the result - pushes image buffer to window
+ * 2. Renders the scene - casts WINDOWS_X rays (one per screen column)
+ * 3. Displays the result - pushes image buffer to window
  *
  * @param param Pointer to game structure (void* from MLX, must cast)
  * @return EXIT_SUCCESS

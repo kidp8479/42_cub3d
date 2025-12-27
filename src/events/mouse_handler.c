@@ -6,7 +6,7 @@
 /*   By: pafroidu <pafroidu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:03:01 by pafroidu          #+#    #+#             */
-/*   Updated: 2025/12/27 18:06:03 by pafroidu         ###   ########.fr       */
+/*   Updated: 2025/12/27 19:53:17 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
  * @brief Handles mouse movement for FPS-style camera rotation
  *
  * Tracks horizontal mouse movement to rotate the camera view.
- * Ignores movements near screen edges (5px threshold) to prevent
- * jittery behavior when cursor reaches window boundaries.
+ * Ignores movements within 5 pixels of screen edges to prevent
+ * cursor wrapping issues at window boundaries.
  * Only handles horizontal rotation (yaw), not vertical (pitch).
  *
  * @param x Current mouse X position in window coordinates

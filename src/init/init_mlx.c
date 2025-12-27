@@ -6,7 +6,7 @@
 /*   By: diade-so <diade-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:57:20 by diade-so          #+#    #+#             */
-/*   Updated: 2025/12/27 13:57:22 by diade-so         ###   ########.fr       */
+/*   Updated: 2025/12/27 19:55:31 by diade-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ static int	init_game_image_buffer(t_game *game)
 }
 
 /**
- * @brief Facade function that initializes all MLX components
+ * @brief Master initialization function for all MLX components
  *
- * Calls connection, window, and buffer init functions in required order.
- * Stops and returns error if any step fails.
+ * Initializes MLX connection, window, and image buffer in required order.
+ * Performs cleanup and returns error if any step fails.
  *
  * @param game Pointer to main game structure
  * @return EXIT_SUCCESS if all inits succeed, EXIT_FAILURE otherwise
