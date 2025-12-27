@@ -23,6 +23,7 @@
 # include <math.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <sys/time.h>
 
 /* =========================== */
 /*         DEFINE              */

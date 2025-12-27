@@ -13,23 +13,51 @@
 #include "cub3d.h"
 
 /**
+ * @brief Calculates microseconds elapsed since last frame
+ *
+ * @param last Pointer to last frame's timestamp
+ * @return Microseconds elapsed
+ */
+static long	get_elapsed_time(struct timeval *last)
+{
+	struct timeval	current;
+	long			elapsed;
+
+	gettimeofday(&current, NULL);
+	elapsed = (current.tv_sec - last->tv_sec) * 1000000
+		+ (current.tv_usec - last->tv_usec);
+	*last = current;
+	return (elapsed);
+}
+
+/**
  * @brief Main game loop - called every frame by MLX
  *
  * Executes the main rendering pipeline:
- * 1. Processes input - checks which keys are pressed and executes actions
- * 2. Renders the scene - casts WINDOWS_X rays (one per screen column)
- * 3. Displays the result - pushes image buffer to window
+ * 1. Limits FPS to 60 for consistent movement speed
+ * 2. Processes input - checks which keys are pressed and executes actions
+ * 3. Renders the scene - casts WINDOWS_X rays (one per screen column)
+ * 4. Displays the result - pushes image buffer to window
  *
  * @param param Pointer to game structure (void* from MLX, must cast)
  * @return EXIT_SUCCESS
  */
 int	game_loop(void *param)
 {
-	t_game			*game;
-	t_key_binding	*bindings;
-	int				i;
+	t_game					*game;
+	t_key_binding			*bindings;
+	int						i;
+	static struct timeval	last_frame;
+	static int				initialized;
 
 	game = (t_game *)param;
+	if (!initialized)
+	{
+		gettimeofday(&last_frame, NULL);
+		initialized = 1;
+	}
+	if (get_elapsed_time(&last_frame) < 16666)
+		return (EXIT_SUCCESS);
 	bindings = get_key_bindings(game);
 	i = 0;
 	while (bindings[i].action)
