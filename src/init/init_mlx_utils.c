@@ -36,6 +36,10 @@ int	validate_window_size(void *mlx)
 	mlx_get_screen_size(mlx, &screen_w, &screen_h);
 	max_safe_w = screen_w * SCREEN_SAFETY_FACTOR;
 	max_safe_h = screen_h * SCREEN_SAFETY_FACTOR;
+	if (max_safe_w > MAX_SCREEN_WIDTH)
+		max_safe_w = MAX_SCREEN_WIDTH;
+	if (max_safe_h > MAX_SCREEN_HEIGHT)
+		max_safe_h = MAX_SCREEN_HEIGHT;
 	if (WINDOWS_X > max_safe_w || WINDOWS_Y > max_safe_h)
 	{
 		print_errors(WIN_TOO_LARGE, NULL, NULL);
