@@ -16,6 +16,7 @@
   * @brief Cleans up partially initialized MLX resources
   *
   * Safely destroys MLX resources by checking if they exist before cleanup.
+  * Sets all pointers to NULL after freeing to prevent double-free errors.
   * Can be called at any stage of initialization failure.
   *
   * @param game Pointer to game structure with potentially partial MLX init

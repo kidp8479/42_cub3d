@@ -99,6 +99,15 @@ void	cleanup_game(t_game *game)
 	free_t_map(&game->map);
 }
 
+/**
+ * @brief Cleans up game resources and exits with given status
+ *
+ * Wrapper function that calls cleanup_game() then exits the program.
+ * Used for graceful shutdown on errors or user-initiated exit.
+ *
+ * @param game Pointer to game structure
+ * @param status Exit status code (EXIT_SUCCESS or EXIT_FAILURE)
+ */
 void	cleanup_exit(t_game *game, int status)
 {
 	cleanup_game(game);
