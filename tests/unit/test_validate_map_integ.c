@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	printf("Testing map: %s\n", argv[1]);
-	init_data(&game);
+	init_t_game(&game);
 	if (validate_argument(argv[1]) != EXIT_SUCCESS)
 	{
 		printf(RED "[FAIL] validate_argument\n" RESET);

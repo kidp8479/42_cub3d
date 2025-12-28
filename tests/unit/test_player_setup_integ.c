@@ -11,7 +11,7 @@ int	main(int argc, char **argv)
 	}
 	if (validate_argument(argv[1]) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
-	init_data(&game);
+	init_t_game(&game);
 	if (parse_map(argv[1], &game.map))
 		return (EXIT_FAILURE);
 	printf("=====map BEFORE=====\n");
@@ -22,6 +22,6 @@ int	main(int argc, char **argv)
 	printf("=====map AFTER=====\n");
 	print_map_grid(&game.map);
 	print_player_info(&game.player);
-	free_map(&game.map);
+	free_t_map(&game.map);
 	return (EXIT_SUCCESS);
 }
