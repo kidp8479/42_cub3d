@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TEST_BIN="./cub3D"
-MAP_DIR="maps/invalid"
+MAP_DIR="../maps/invalid"
 
 echo "=== Running tests for invalid maps .cub maps ==="
 for map in "$MAP_DIR"/*; do
