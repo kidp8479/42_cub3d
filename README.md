@@ -150,7 +150,7 @@ cc -Wall -Wextra -Werror *.c -Lmlx_linux -lmlx_linux -lXext -lX11 -lm
 ### Program Usage
 
 ```bash
-./cub3D map.cub
+./cub3D maps/valid/any_map_in_the_valid_folder.cub
 ```
 
 The program takes a scene description file with `.cub` extension and displays the 3D view.
