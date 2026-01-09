@@ -28,7 +28,7 @@ Through Cub3D, we learned:
 Building on our experience from Minishell, we refined our collaborative development practices for Cub3D. **After the success of working together for Minishell, we wanted to level up even more our group workflow and development practices.** The project's complexity, combining graphics programming, mathematical algorithms, and game mechanics, required rigorous coordination.
 
 **Our Philosophy:**
-For us, working cleanly as a group isn't just about dividing tasks—it's about **communication, documentation, and shared understanding**. We invested significant effort in establishing efficient practices and tools that would make our collaboration seamless and our codebase maintainable.
+For us, working cleanly as a group isn't just about dividing tasks, it's about **communication, documentation, and shared understanding**. We invested significant effort in establishing efficient practices and tools that would make our collaboration seamless and our codebase maintainable.
 
 **Project Management:**
 - **Notion Workspace**: Task management with Trello-style kanban boards
