@@ -124,7 +124,7 @@ All source files must compile with:
 cc -Wall -Wextra -Werror
 ```
 
-You'll need to link with MiniLibX and math library:
+You'll need to link with MiniLibX and math library (already well linked in the Makefile if you use the command `make` to compile the project):
 ```bash
 # macOS
 cc -Wall -Wextra -Werror *.c -Lmlx -lmlx -framework OpenGL -framework AppKit -lm
