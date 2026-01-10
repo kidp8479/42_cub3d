@@ -2,6 +2,13 @@
 
 ![Cub3D Cover](cover-cub3d.png)
 
+![Cub3D Textures Bricks](bricks.png)
+![Cub3D Textures Clouds](clouds.png)
+![Cub3D Textures Colors](colors.png)
+![Cub3D Textures Dinos](dinos.png)
+![Cub3D Textures Sky](sky.png)
+![Cub3D Textures TwinPeaks](twinpeaks.png)
+
 ## Description
 
 Cub3D is a graphical project that challenged us to create a 3D maze game using ray-casting, inspired by the legendary Wolfenstein 3D (1992), the game that pioneered the first-person shooter genre. This project explores the fascinating intersection of mathematics, computer graphics, and game development.
