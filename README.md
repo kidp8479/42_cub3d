@@ -97,7 +97,7 @@ src/
 ├── parsing/       # .cub file parsing and validation
 ├── raycast/       # Ray-casting engine (DDA algorithm)
 ├── render/        # Pixel rendering and drawing
-└── utils/         # Helper functions (cleanup, errors, etc.)
+└── utils/         # Helper functions (cleanup, errors, etc)
 ```
 
 **What We Learned:**
