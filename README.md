@@ -464,7 +464,7 @@ While our implementation is robust and passes all project requirements, we've id
 - The issue is cosmetic and extremely rare in normal gameplay
 - Fixing it would require significant refactoring of the collision system
 - The project requirements focus on core functionality (ray-casting, parsing, textures), all of which work correctly
-- No memory errors or crashes occur—the game remains stable
+- No memory errors or crashes occur, the game remains stable
 
 This limitation demonstrates the complexity of collision detection in game development and the trade-offs between perfect edge case handling and project delivery timelines.
 
